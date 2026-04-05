@@ -1,989 +1,884 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0d0518">
+<meta name="theme-color" content="#11001c">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Radha Naam Jap">
-<title>🌸 Radha Naam Jap</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<title>🌸 Radha Naam Jap - Divine</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --saffron:#FF6B1A;--gold:#FFD700;--gdim:rgba(255,215,0,0.6);
-  --rose:#FF4D8D;--lotus:#FF85A1;
-  --deep:#0d0518;--mid:#1e0a35;
-  --panel:rgba(255,255,255,0.045);--border:rgba(255,215,0,0.15);
+:root {
+  --gold: #FFD700;
+  --saffron: #FF6B1A;
+  --rose: #FF4D8D;
+  --bg-deep: #0a0014;
+  --bg-mid: #1c0a2e;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,215,0,0.2);
+  --text-primary: #FFF8E7;
+  --text-dim: rgba(255,215,0,0.6);
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;}
-body{font-family:'Crimson Pro',Georgia,serif;background:var(--deep);display:flex;flex-direction:column;align-items:center;color:#FFF8E7;touch-action:manipulation;}
 
-/* BG */
-.bg-mandala{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:130vmax;height:130vmax;opacity:.045;animation:spinBg 90s linear infinite;pointer-events:none;z-index:0;}
-@keyframes spinBg{to{transform:translate(-50%,-50%) rotate(360deg);}}
-.petal{position:fixed;pointer-events:none;animation:floatP linear infinite;opacity:0;z-index:1;}
-@keyframes floatP{0%{transform:translateY(105vh) rotate(0deg);opacity:0;}8%{opacity:.5;}92%{opacity:.2;}100%{transform:translateY(-8vh) rotate(600deg);opacity:0;}}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { height:100%; overflow:hidden; font-family:'Crimson Pro', serif; background:var(--bg-deep); color:var(--text-primary); touch-action:manipulation; }
 
-/* TABS */
-.tabs{position:relative;z-index:10;display:flex;width:100%;max-width:480px;background:rgba(0,0,0,.4);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);flex-shrink:0;}
-.tab{flex:1;padding:13px 0 11px;text-align:center;font-family:'Crimson Pro',serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,215,0,.35);cursor:pointer;border:none;background:none;transition:color .2s;position:relative;}
-.tab.active{color:var(--gold);}
-.tab.active::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;}
-.tab-icon{display:block;font-size:1rem;margin-bottom:1px;}
-
-/* PAGES */
-.page{display:none;flex-direction:column;align-items:center;width:100%;max-width:480px;flex:1;overflow-y:auto;overflow-x:hidden;position:relative;z-index:5;}
-.page.active{display:flex;}
-.page::-webkit-scrollbar{width:2px;}
-.page::-webkit-scrollbar-thumb{background:rgba(255,215,0,.2);}
-
-/* ═══════════════ COUNTER PAGE ═══════════════ */
-.counter-page{padding:10px 14px 12px;gap:8px;justify-content:space-between;}
-
-.header{text-align:center;}
-.om{font-size:1.6rem;background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(255,180,50,.6));animation:omGlow 3s ease-in-out infinite;display:block;line-height:1.1;}
-@keyframes omGlow{0%,100%{filter:drop-shadow(0 0 8px rgba(255,180,50,.5))}50%{filter:drop-shadow(0 0 20px rgba(255,180,50,.9))}}
-.title-main{font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,4.5vw,1.8rem);font-weight:900;background:linear-gradient(135deg,var(--lotus),var(--gold),var(--saffron));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.title-sub{font-style:italic;color:var(--gdim);font-size:.82rem;letter-spacing:.14em;}
-
-/* GOAL + PENALTY BANNER */
-.goal-banner{
-  width:100%;max-width:360px;
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:16px;padding:10px 14px;
+/* Background Animations */
+.bg-mandala {
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:150vmax; height:150vmax; opacity:0.06; animation:spinBg 120s linear infinite; pointer-events:none; z-index:0;
 }
-.goal-banner.has-penalty{border-color:rgba(255,80,80,.4);background:rgba(255,50,50,.07);}
-.goal-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.goal-label{font-size:.75rem;color:var(--gdim);letter-spacing:.08em;}
-.goal-nums{font-family:'Cinzel Decorative',serif;font-size:.9rem;color:var(--gold);}
-.penalty-tag{font-size:.7rem;background:rgba(255,80,80,.2);border:1px solid rgba(255,80,80,.4);border-radius:8px;padding:2px 8px;color:rgba(255,150,150,1);letter-spacing:.05em;}
-.goal-bar-bg{height:6px;background:rgba(255,215,0,.08);border-radius:6px;overflow:hidden;}
-.goal-bar-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:6px;transition:width .5s ease;}
-.goal-bar-fill.complete{background:linear-gradient(90deg,#00e676,#69f0ae);}
+@keyframes spinBg { to { transform:translate(-50%,-50%) rotate(360deg); } }
 
-/* VOICE */
-.voice-bar{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:9px 13px;display:flex;align-items:center;gap:10px;}
-.voice-toggle{width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,215,0,.3);background:rgba(255,107,26,.1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all .25s;flex-shrink:0;}
-.voice-toggle.listening{background:radial-gradient(circle,rgba(255,77,141,.3),rgba(255,107,26,.2));border-color:var(--rose);animation:micP 1s ease-in-out infinite;box-shadow:0 0 18px rgba(255,77,141,.4);}
-@keyframes micP{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.voice-info{flex:1;min-width:0;}
-.vstatus{font-size:.74rem;color:var(--gdim);letter-spacing:.06em;}
-.vtranscript{font-size:.78rem;color:rgba(255,200,180,.8);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1em;}
-
-/* MALA */
-.mala-wrap{position:relative;width:min(46vw,190px);height:min(46vw,190px);flex-shrink:0;}
-.mala-svg{width:100%;height:100%;animation:spinBg 35s linear infinite;}
-.count-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
-.cnum{font-family:'Cinzel Decorative',serif;font-size:clamp(2.2rem,9vw,3.6rem);font-weight:900;line-height:.9;background:linear-gradient(180deg,#fff 0%,var(--gold) 55%,var(--saffron) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 12px rgba(255,200,50,.5));}
-.cnum.bump{animation:bump .22s ease-out;}
-@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.25);filter:drop-shadow(0 0 30px rgba(255,200,50,1))}100%{transform:scale(1)}}
-.clbl{font-style:italic;color:var(--gdim);font-size:.68rem;letter-spacing:.17em;}
-.mala-badge{text-align:center;font-size:.76rem;background:rgba(255,215,0,.07);border:1px solid var(--border);border-radius:20px;padding:3px 14px;color:var(--gold);letter-spacing:.07em;}
-
-/* TAP BTN */
-.tap-btn{width:min(62vw,255px);height:min(62vw,255px);border-radius:50%;border:none;background:none;cursor:pointer;outline:none;position:relative;flex-shrink:0;transition:transform .1s;}
-.tap-btn:active{transform:scale(.93);}
-.tap-outer{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(255,150,80,.14),rgba(180,50,120,.1) 45%,rgba(60,10,90,.32) 100%);border:2px solid rgba(255,215,0,.22);box-shadow:0 0 28px rgba(255,100,30,.18),0 0 55px rgba(180,50,150,.12),inset 0 0 28px rgba(255,200,50,.07);transition:all .15s;}
-.tap-btn:active .tap-outer{box-shadow:0 0 50px rgba(255,150,50,.55),0 0 80px rgba(255,100,150,.3),inset 0 0 40px rgba(255,200,50,.2);border-color:rgba(255,215,0,.6);}
-.tap-inner{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,200,100,.18),rgba(200,80,150,.12) 50%,rgba(50,8,90,.45) 100%);border:1px solid rgba(255,215,0,.18);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;}
-.tap-radha{font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,5vw,1.8rem);font-weight:900;background:linear-gradient(135deg,var(--lotus),var(--gold),var(--saffron));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 8px rgba(255,150,100,.6));}
-.tap-hindi{font-size:clamp(1.1rem,4.5vw,1.6rem);color:rgba(255,215,0,.85);text-shadow:0 0 14px rgba(255,200,50,.5);}
-.tap-hint{font-style:italic;font-size:.65rem;color:rgba(255,200,180,.4);letter-spacing:.1em;}
-.ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,.4),transparent);transform:scale(0);animation:ripOut .6s ease-out forwards;pointer-events:none;}
-@keyframes ripOut{to{transform:scale(4);opacity:0;}}
-.burst{position:fixed;pointer-events:none;z-index:50;font-size:1.4rem;animation:burstUp 1.1s ease-out forwards;}
-@keyframes burstUp{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-85px) scale(.4);}}
-
-/* STATS */
-.stats-row{display:flex;gap:7px;width:100%;max-width:360px;}
-.stat-card{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:7px 4px;text-align:center;}
-.sval{font-family:'Cinzel Decorative',serif;font-size:clamp(.8rem,3vw,1.15rem);font-weight:700;color:var(--gold);}
-.slbl{font-size:.58rem;color:rgba(255,215,0,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
-.streak-fire{color:#ff6b35;font-size:.9rem;}
-
-/* CONTROLS */
-.controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding-bottom:2px;}
-.ctrl-btn{background:var(--panel);border:1px solid var(--border);border-radius:11px;color:var(--gdim);font-family:'Crimson Pro',serif;font-size:.73rem;letter-spacing:.08em;padding:7px 14px;cursor:pointer;transition:all .2s;}
-.ctrl-btn:active{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.4);transform:scale(.97);}
-.ctrl-btn.danger{border-color:rgba(255,80,80,.3);color:rgba(255,130,130,.8);}
-
-/* ═══════════════ PRARTHANA PAGE ═══════════════ */
-.prarthana-page{padding:20px 18px 30px;gap:0;background:radial-gradient(ellipse at 50% 20%,rgba(255,100,50,.08) 0%,transparent 65%);}
-.prar-om{font-size:3rem;text-align:center;display:block;background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(255,180,50,.7));animation:omGlow 3s ease-in-out infinite;margin-bottom:6px;}
-.prar-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,5vw,1.8rem);font-weight:900;color:var(--gold);text-align:center;margin-bottom:4px;filter:drop-shadow(0 0 10px rgba(255,215,0,.4));}
-.prar-subtitle{font-style:italic;color:var(--gdim);font-size:.9rem;text-align:center;letter-spacing:.1em;margin-bottom:24px;}
-
-.lotus-divider{text-align:center;font-size:1.3rem;letter-spacing:.4em;margin:18px 0;color:rgba(255,133,161,.5);}
-
-.prayer-card{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:20px 18px;margin-bottom:16px;position:relative;overflow:hidden;}
-.prayer-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(255,107,26,.06),transparent 60%);pointer-events:none;}
-.prayer-hindi{font-size:clamp(1.1rem,4vw,1.5rem);color:rgba(255,215,0,.9);text-align:center;line-height:1.9;margin-bottom:10px;text-shadow:0 0 8px rgba(255,200,50,.2);}
-.prayer-english{font-style:italic;color:rgba(255,200,180,.7);font-size:clamp(.82rem,3vw,1rem);text-align:center;line-height:1.8;}
-
-.quote-card{background:linear-gradient(135deg,rgba(255,107,26,.08),rgba(180,50,120,.08));border:1px solid rgba(255,133,161,.2);border-radius:18px;padding:18px 16px;margin-bottom:16px;text-align:center;}
-.quote-text{font-style:italic;font-size:clamp(.9rem,3.5vw,1.15rem);color:rgba(255,220,200,.85);line-height:1.75;margin-bottom:8px;}
-.quote-source{font-size:.72rem;color:rgba(255,215,0,.45);letter-spacing:.12em;text-transform:uppercase;}
-
-.prar-naam-btn{width:100%;max-width:300px;margin:0 auto 16px;display:block;background:linear-gradient(135deg,rgba(255,107,26,.25),rgba(180,50,120,.2));border:1px solid rgba(255,133,161,.4);border-radius:50px;padding:14px 20px;font-family:'Cinzel Decorative',serif;font-size:.95rem;color:var(--gold);cursor:pointer;text-align:center;letter-spacing:.08em;transition:all .25s;}
-.prar-naam-btn:active{transform:scale(.97);box-shadow:0 0 20px rgba(255,133,161,.3);}
-
-/* ═══════════════ CHART PAGE ═══════════════ */
-.chart-page{padding:16px 14px 20px;gap:14px;}
-.chart-title{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);text-align:center;}
-.chart-subtitle{font-style:italic;color:var(--gdim);font-size:.8rem;text-align:center;margin-top:2px;}
-
-.chart-toggle{display:flex;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:3px;gap:3px;}
-.chart-tab{flex:1;padding:7px;text-align:center;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,215,0,.4);cursor:pointer;border-radius:9px;transition:all .2s;border:none;background:none;}
-.chart-tab.active{background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.25);}
-
-.chart-wrap{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:16px 12px 10px;position:relative;}
-canvas#chartCanvas{width:100%;height:180px;display:block;}
-
-.chart-stats{display:flex;gap:8px;width:100%;max-width:400px;}
-.cs-card{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:10px 8px;text-align:center;}
-.cs-val{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);}
-.cs-lbl{font-size:.6rem;color:rgba(255,215,0,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
-
-/* ═══════════════ GOALS PAGE ═══════════════ */
-.goals-page{padding:16px 14px 24px;gap:14px;}
-.goals-title{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);text-align:center;}
-
-/* STREAK BIG CARD */
-.streak-card{
-  width:100%;max-width:400px;
-  background:linear-gradient(135deg,rgba(255,107,26,.12),rgba(180,50,50,.1));
-  border:1px solid rgba(255,107,26,.3);border-radius:20px;padding:18px 16px;text-align:center;
+.petal { position:fixed; pointer-events:none; z-index:1; animation:fallP linear infinite; opacity:0; }
+@keyframes fallP {
+  0% { transform:translateY(-10vh) rotate(0deg) scale(0.5); opacity:0; }
+  10% { opacity:0.6; transform:translateY(10vh) rotate(45deg) scale(1); }
+  90% { opacity:0.6; }
+  100% { transform:translateY(110vh) rotate(360deg) scale(0.8); opacity:0; }
 }
-.streak-num{font-family:'Cinzel Decorative',serif;font-size:3rem;color:var(--saffron);line-height:1;filter:drop-shadow(0 0 12px rgba(255,107,26,.5));}
-.streak-lbl{font-size:.85rem;color:rgba(255,150,80,.8);letter-spacing:.1em;margin-top:4px;}
-.streak-msg{font-style:italic;color:rgba(255,200,150,.6);font-size:.8rem;margin-top:8px;}
 
-/* GOAL SETTER */
-.goal-setter{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:16px;}
-.gs-title{font-family:'Cinzel Decorative',serif;font-size:.9rem;color:var(--gold);margin-bottom:12px;}
-.goal-options{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
-.goal-opt{flex:1;min-width:70px;padding:9px 6px;text-align:center;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.15);border-radius:11px;font-family:'Cinzel Decorative',serif;font-size:.8rem;color:var(--gdim);cursor:pointer;transition:all .2s;}
-.goal-opt.active{background:rgba(255,215,0,.15);border-color:var(--gold);color:var(--gold);}
-.goal-opt:active{transform:scale(.96);}
-.custom-goal-row{display:flex;gap:8px;align-items:center;}
-.custom-input{flex:1;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:#FFF8E7;font-family:'Crimson Pro',serif;font-size:1rem;outline:none;text-align:center;}
-.custom-input:focus{border-color:rgba(255,215,0,.4);}
-.set-goal-btn{background:linear-gradient(135deg,rgba(255,107,26,.3),rgba(180,50,120,.2));border:1px solid rgba(255,133,161,.3);border-radius:10px;padding:9px 16px;color:var(--gold);font-family:'Crimson Pro',serif;font-size:.8rem;cursor:pointer;letter-spacing:.07em;white-space:nowrap;}
-.set-goal-btn:active{transform:scale(.97);}
-
-/* PENALTY CARD */
-.penalty-card{
-  width:100%;max-width:400px;
-  background:rgba(255,50,50,.07);
-  border:1px solid rgba(255,80,80,.35);
-  border-radius:18px;padding:16px;
+/* App Container */
+.app {
+  position:relative; z-index:10; height:100%; display:flex; flex-direction:column;
+  max-width:500px; margin:0 auto; background:linear-gradient(180deg, rgba(28,10,46,0) 0%, rgba(10,0,20,0.8) 100%);
 }
-.penalty-card.none{background:rgba(50,200,100,.05);border-color:rgba(100,220,100,.25);}
-.pc-title{font-family:'Cinzel Decorative',serif;font-size:.88rem;margin-bottom:8px;}
-.pc-title.bad{color:rgba(255,130,130,1);}
-.pc-title.good{color:rgba(150,255,180,1);}
-.pc-body{font-style:italic;font-size:.82rem;color:rgba(255,200,180,.8);line-height:1.6;}
-.pc-num{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:rgba(255,130,130,1);display:block;margin:6px 0 4px;}
 
-/* TODAY PROGRESS */
-.today-progress{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:16px;}
-.tp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.tp-label{font-family:'Cinzel Decorative',serif;font-size:.85rem;color:var(--gold);}
-.tp-pct{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--lotus);}
-.tp-bar-bg{height:8px;background:rgba(255,215,0,.07);border-radius:8px;overflow:hidden;margin-bottom:8px;}
-.tp-bar-fill{height:100%;border-radius:8px;transition:width .5s ease;}
-.tp-details{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,215,0,.45);letter-spacing:.06em;}
+/* Glass Tabs (Bottom) */
+.tab-bar {
+  display:flex; justify-content:space-around; align-items:center;
+  background:rgba(28,10,46,0.6); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--glass-border); padding:10px 0 25px;
+  position:absolute; bottom:0; left:0; right:0; z-index:100;
+}
+.tab {
+  display:flex; flex-direction:column; align-items:center; opacity:0.5;
+  transition:all 0.3s; cursor:pointer; flex: 1; padding: 5px;
+}
+.tab.active { opacity:1; filter:drop-shadow(0 0 8px rgba(255,215,0,0.4)); transform:translateY(-3px); }
+.tab-icon { font-size:1.4rem; margin-bottom:4px; }
+.tab-label { font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; color:var(--gold); }
 
-/* TOAST */
-.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.85);background:rgba(13,5,24,.97);border:1px solid rgba(255,215,0,.4);border-radius:20px;padding:16px 26px;text-align:center;z-index:200;backdrop-filter:blur(20px);box-shadow:0 0 40px rgba(255,100,50,.25);opacity:0;pointer-events:none;transition:all .3s;min-width:210px;}
-.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
-.t-icon{font-size:1.7rem;display:block;}
-.t-text{font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:.9rem;margin-top:4px;}
-.t-sub{font-style:italic;color:rgba(255,200,180,.8);font-size:.78rem;margin-top:3px;}
+/* Pages */
+.page {
+  display:none; flex:1; overflow-y:auto; overflow-x:hidden; padding:20px; padding-bottom:100px;
+  opacity:0; transition:opacity 0.3s;
+}
+.page.active { display:flex; flex-direction:column; opacity:1; }
+.page::-webkit-scrollbar { width:4px; }
+.page::-webkit-scrollbar-thumb { background:rgba(255,215,0,0.3); border-radius:4px; }
 
-/* PENALTY MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
-.modal-overlay.hidden{display:none;}
-.modal-box{background:var(--mid);border:1px solid rgba(255,80,80,.4);border-radius:24px;padding:28px 22px;text-align:center;max-width:340px;width:100%;box-shadow:0 0 60px rgba(255,50,50,.2);}
-.modal-icon{font-size:3rem;display:block;margin-bottom:12px;}
-.modal-title{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:rgba(255,150,150,1);margin-bottom:8px;}
-.modal-body{font-style:italic;color:rgba(255,200,180,.85);font-size:.9rem;line-height:1.7;margin-bottom:20px;}
-.modal-penalty-num{font-family:'Cinzel Decorative',serif;font-size:2.5rem;color:rgba(255,130,130,1);display:block;margin:10px 0;}
-.modal-btn{width:100%;background:linear-gradient(135deg,rgba(255,107,26,.3),rgba(255,50,100,.2));border:1px solid rgba(255,133,161,.4);border-radius:14px;padding:14px;font-family:'Cinzel Decorative',serif;font-size:.9rem;color:var(--gold);cursor:pointer;letter-spacing:.07em;}
-.modal-btn:active{transform:scale(.98);}
+/* Click Area Overlay (Jap Page Only) */
+.click-overlay {
+  position:absolute; inset:0; z-index:5; /* Below UI elements but above bg */
+  cursor:pointer; display:none;
+}
+.page-counter.active ~ .click-overlay { display:block; }
+
+/* Jap Counter Styles */
+.jap-header { text-align:center; position:relative; z-index:20; pointer-events:none; margin-bottom: 5px;}
+.om-glow {
+  font-size:2rem; background:linear-gradient(135deg, var(--saffron), var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 15px rgba(255,180,50,0.8)); animation:breathe 4s infinite alternate;
+}
+@keyframes breathe { from{filter:drop-shadow(0 0 10px rgba(255,180,50,0.5));} to{filter:drop-shadow(0 0 25px rgba(255,180,50,1));} }
+
+/* Counter Switcher */
+.counter-switch {
+  display:flex; background:rgba(0,0,0,0.5); border:1px solid var(--glass-border);
+  border-radius:30px; margin:0 auto 15px; width:fit-content; position:relative; z-index:20;
+  backdrop-filter:blur(8px);
+}
+.c-btn {
+  padding:8px 24px; font-size:0.8rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px;
+  cursor:pointer; transition:0.3s; position:relative; z-index:2; font-family:'Cinzel Decorative', serif;
+  font-weight: 700;
+}
+.c-btn.active { color:#fff; text-shadow:0 0 10px rgba(255,215,0,0.8); }
+.c-slider {
+  position:absolute; top:3px; bottom:3px; left:3px; width:calc(50% - 3px);
+  background:linear-gradient(135deg, rgba(255,107,26,0.6), rgba(255,77,141,0.6));
+  border-radius:25px; transition:0.3s; z-index:1; box-shadow: 0 0 15px rgba(255,107,26,0.4);
+}
+.counter-switch[data-active="2"] .c-slider { left:calc(50%); width:calc(50% - 3px);}
+
+/* Top Stats & Voice Bar */
+.top-bar-jap {
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; z-index:20; position:relative;
+}
+.voice-mic {
+  width:45px; height:45px; border-radius:50%; background:var(--glass); border:1px solid var(--glass-border);
+  display:flex; align-items:center; justify-content:center; font-size:1.3rem; cursor:pointer;
+  transition:all 0.3s; backdrop-filter:blur(5px);
+}
+.voice-mic.active {
+  background:rgba(255,77,141,0.2); border-color:var(--rose); color:#fff;
+  animation:micPulse 1.5s infinite;
+}
+@keyframes micPulse { 0%{box-shadow:0 0 0 0 rgba(255,77,141,0.4);} 70%{box-shadow:0 0 0 15px rgba(255,77,141,0);} 100%{box-shadow:0 0 0 0 rgba(255,77,141,0);} }
+.voice-status { font-size:0.7rem; color:var(--text-dim); text-align:right;}
+.voice-status div:first-child { color:var(--rose); font-weight:bold;}
+
+.mala-display {
+  flex:1; margin-right:15px; background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:space-between;
+}
+.mala-text { font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+.mala-val { font-family:'Cinzel Decorative', serif; font-size:1.2rem; color:var(--gold); }
+
+/* Giant Counter Ring */
+.giant-counter {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; pointer-events:none; z-index:20;
+}
+.mala-svg { width:240px; height:240px; position:absolute; animation:spinBg 40s linear infinite; }
+.count-num {
+  font-family:'Cinzel Decorative', serif; font-size:5rem; line-height:1; font-weight:900;
+  background:linear-gradient(180deg, #fff, var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 20px rgba(255,215,0,0.6)); position:relative;
+  transition:transform 0.1s;
+}
+.count-num.bump { transform:scale(1.15); filter:drop-shadow(0 0 40px rgba(255,215,0,1)); }
+.count-label { font-size:1.1rem; color:var(--text-dim); font-family:'Kalam', cursive; letter-spacing:2px; margin-top:5px; text-shadow:0 0 10px var(--saffron);}
+
+.click-hint {
+  position:absolute; bottom:120px; width:100%; text-align:center; font-style:italic;
+  color:rgba(255,255,255,0.3); font-size:0.8rem; pointer-events:none; z-index:20;
+  animation:fadeInOut 3s infinite;
+}
+@keyframes fadeInOut{ 0%,100%{opacity:0.2} 50%{opacity:0.8} }
+
+/* Burst & Ripple */
+.burst-petal { position:fixed; z-index:50; pointer-events:none; font-size:1.5rem; animation:burstUp 1s ease-out forwards; }
+@keyframes burstUp { 0%{opacity:1; transform:translateY(0) scale(0.5) rotate(0deg);} 100%{opacity:0; transform:translateY(-100px) scale(1.2) rotate(180deg);} }
+.ripple {
+  position:absolute; border-radius:50%; background:radial-gradient(circle, rgba(255,215,0,0.6) 0%, transparent 70%);
+  transform:translate(-50%,-50%) scale(0); animation:rip 0.6s ease-out forwards; pointer-events:none; z-index:4;
+}
+@keyframes rip { to {transform:translate(-50%,-50%) scale(2); opacity:0;} }
+
+/* Updesh Tab */
+.updesh-page { gap:20px; }
+.up-title { font-family:'Cinzel Decorative', serif; font-size:1.5rem; color:var(--gold); text-align:center; }
+.up-card {
+  background:rgba(255,255,255,0.03); border:1px solid rgba(255,107,26,0.3);
+  border-radius:16px; padding:20px; position:relative; overflow:hidden;
+  box-shadow:inset 0 0 20px rgba(255,77,141,0.05); margin-bottom: 20px;
+}
+.up-card::before {
+  content:''; position:absolute; inset:0; background:radial-gradient(circle at top right, rgba(255,107,26,0.1), transparent 70%); pointer-events:none;
+}
+.up-cat { font-size:0.7rem; color:var(--rose); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; }
+.up-hindi { font-family:'Kalam', cursive; font-size:1.3rem; color:#fff; line-height:1.6; margin-bottom:15px; text-shadow:0 2px 4px rgba(0,0,0,0.5); }
+.up-eng { font-style:italic; color:var(--text-dim); font-size:0.9rem; line-height:1.5; margin-bottom:15px; }
+.up-src { text-align:right; font-size:0.75rem; color:var(--gold); letter-spacing:1px; opacity:0.8; }
+
+/* Progress Tab */
+.prog-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px; }
+.p-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:15px; text-align:center;}
+.p-val { font-family:'Cinzel Decorative', serif; font-size:1.5rem; color:var(--gold); margin:5px 0; }
+.p-lbl { font-size:0.7rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+
+.heatmap { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:15px; margin-top:15px; }
+.hm-title { font-size:0.8rem; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; text-align:center;}
+.hm-grid { display:flex; justify-content:space-between; gap:5px; align-items:flex-end; height:100px; padding-bottom:20px; position:relative; border-bottom:1px solid rgba(255,255,255,0.1); }
+.hm-bar-wrap { flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; height:100%; position:relative; }
+.hm-bar { width:10px; background:var(--glass); border-radius:5px 5px 0 0; transition:height 0.5s, background 0.5s; }
+.hm-day { position:absolute; bottom:-18px; font-size:0.6rem; color:var(--text-dim); }
+
+/* Goals Tab */
+.gs-card { background:rgba(255,107,26,0.05); border:1px solid rgba(255,107,26,0.3); border-radius:16px; padding:20px; text-align:center; margin-bottom:15px;}
+.gs-streak { font-family:'Cinzel Decorative', serif; font-size:2.5rem; color:var(--saffron); filter:drop-shadow(0 0 10px rgba(255,107,26,0.5)); margin:10px 0;}
+.goal-opts { display:flex; gap:10px; flex-wrap:wrap; margin-top:15px; justify-content:center;}
+.g-opt { padding:8px 16px; background:var(--glass); border:1px solid var(--glass-border); border-radius:20px; color:var(--text-dim); cursor:pointer; font-family:'Cinzel Decorative', serif; transition:all 0.2s;}
+.g-opt.active { background:rgba(255,215,0,0.15); color:var(--gold); border-color:var(--gold); box-shadow:inset 0 0 10px rgba(255,215,0,0.2);}
+input.g-opt { max-width:80px; text-align:center; font-family:'Crimson Pro', serif; outline:none; color:#fff; }
+
+.btn { display:inline-block; padding:10px 20px; background:linear-gradient(135deg, var(--saffron), var(--rose)); border:none; border-radius:20px; color:#fff; font-family:'Cinzel Decorative', serif; font-size:0.9rem; cursor:pointer; box-shadow:0 4px 15px rgba(255,107,26,0.3); transition:all 0.2s; text-decoration:none; text-align:center;}
+.btn:active { transform:scale(0.95); }
+
+/* Prarthana Tab */
+.prayer { text-align:center; margin-bottom:25px; }
+.pr-hin { font-family:'Kalam', cursive; font-size:1.4rem; color:var(--gold); margin-bottom:10px; text-shadow:0 0 10px rgba(255,215,0,0.2); line-height: 1.4;}
+.pr-eng { font-style:italic; font-size:0.9rem; color:rgba(255,255,255,0.7); line-height: 1.5; }
+.divider { color:var(--rose); opacity:0.5; text-align:center; letter-spacing:10px; font-size:1.2rem; margin:15px 0;}
+
+/* Toast */
+.toast {
+  position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-20px); opacity:0; pointer-events:none;
+  background:rgba(28,10,46,0.95); border:1px solid var(--gold); border-radius:20px; padding:10px 20px;
+  display:flex; align-items:center; gap:10px; box-shadow:0 0 20px rgba(255,215,0,0.2); z-index:1000; transition:all 0.3s;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+.t-icn { font-size:1.5rem; }
+.t-msg { font-size:0.9rem; color:var(--gold); }
+
+/* Misc Controls */
+.controls-bottom { display:flex; justify-content:center; gap:15px; margin-top:20px; z-index:20; position:relative; pointer-events:auto;}
+.c-btn-small { background:var(--glass); border:1px solid rgba(255,255,255,0.1); padding:5px 15px; border-radius:15px; color:rgba(255,255,255,0.5); font-size:0.7rem; cursor:pointer; }
+.c-btn-small:hover { color:#fff; border-color:var(--text-dim); }
+
 </style>
 </head>
 <body>
 
-<!-- BG -->
+<!-- Animated Background -->
 <svg class="bg-mandala" viewBox="0 0 800 800" fill="none">
-  <circle cx="400" cy="400" r="390" stroke="#FFD700" stroke-width=".5"/>
-  <circle cx="400" cy="400" r="310" stroke="#FF6B1A" stroke-width=".5"/>
-  <circle cx="400" cy="400" r="230" stroke="#FFD700" stroke-width=".4"/>
-  <circle cx="400" cy="400" r="150" stroke="#FF6B1A" stroke-width=".3"/>
-  <g stroke="#FFD700" stroke-width=".35" opacity=".9">
+  <circle cx="400" cy="400" r="390" stroke="#FFD700" stroke-width="0.5"/>
+  <circle cx="400" cy="400" r="340" stroke="#FF6B1A" stroke-width="0.3"/>
+  <circle cx="400" cy="400" r="280" stroke="#FF4D8D" stroke-width="0.4"/>
+  <circle cx="400" cy="400" r="220" stroke="#FFD700" stroke-width="0.2"/>
+  <circle cx="400" cy="400" r="160" stroke="#FF6B1A" stroke-width="0.5"/>
+  <g stroke="#FFD700" stroke-width="0.3" opacity="0.6">
     <line x1="400" y1="10" x2="400" y2="790"/><line x1="10" y1="400" x2="790" y2="400"/>
-    <line x1="155" y1="155" x2="645" y2="645"/><line x1="645" y1="155" x2="155" y2="645"/>
-    <line x1="50" y1="265" x2="750" y2="535"/><line x1="50" y1="535" x2="750" y2="265"/>
-    <line x1="265" y1="50" x2="535" y2="750"/><line x1="535" y1="50" x2="265" y2="750"/>
+    <line x1="124" y1="124" x2="676" y2="676"/><line x1="676" y1="124" x2="124" y2="676"/>
   </g>
-  <g fill="none" stroke="#FF85A1" stroke-width=".6" opacity=".65">
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(0 400 400)"/>
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(45 400 400)"/>
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(90 400 400)"/>
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(135 400 400)"/>
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(180 400 400)"/>
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(225 400 400)"/>
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(270 400 400)"/>
-    <ellipse cx="400" cy="255" rx="32" ry="65" transform="rotate(315 400 400)"/>
+  <g fill="none" stroke="#FF4D8D" stroke-width="0.5" opacity="0.4">
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(0 400 400)"/>
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(45 400 400)"/>
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(90 400 400)"/>
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(135 400 400)"/>
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(180 400 400)"/>
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(225 400 400)"/>
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(270 400 400)"/>
+    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(315 400 400)"/>
   </g>
 </svg>
 
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('counter')"><span class="tab-icon">📿</span>Jap</button>
-  <button class="tab" onclick="switchTab('goals')"><span class="tab-icon">🔥</span>Goals</button>
-  <button class="tab" onclick="switchTab('chart')"><span class="tab-icon">📊</span>Chart</button>
-  <button class="tab" onclick="switchTab('prarthana')"><span class="tab-icon">🌸</span>Prarthana</button>
-</div>
+<div class="app">
 
-<!-- ══ COUNTER PAGE ══ -->
-<div class="page active counter-page" id="page-counter">
-
-  <div class="header">
-    <span class="om">ॐ</span>
-    <div class="title-main">Radha Naam Jap</div>
-    <div class="title-sub">राधे राधे • श्री राधे</div>
-  </div>
-
-  <!-- Goal/Penalty banner -->
-  <div class="goal-banner" id="goalBanner">
-    <div class="goal-row">
-      <span class="goal-label">Today's Goal</span>
-      <span class="goal-nums" id="goalNums">— not set —</span>
+  <!-- 📿 JAP PAGE (Default) -->
+  <div class="page page-counter active" id="pg-jap">
+    
+    <div class="jap-header">
+      <div class="om-glow">ॐ</div>
     </div>
-    <div class="goal-bar-bg"><div class="goal-bar-fill" id="goalBarFill" style="width:0%"></div></div>
-  </div>
 
-  <!-- Voice bar -->
-  <div class="voice-bar">
-    <button class="voice-toggle" id="voiceBtn" onclick="toggleVoice()">🎙️</button>
-    <div class="voice-info">
-      <div class="vstatus" id="vstatus">Voice: Off — tap mic to start</div>
-      <div class="vtranscript" id="vtrans">Say "Radha" or "Radhe" to count…</div>
+    <!-- Dual Counter Switcher -->
+    <div class="counter-switch" id="cSwitch" data-active="1">
+      <div class="c-slider"></div>
+      <div class="c-btn active" onclick="switchCounter(1)">Radha Naam</div>
+      <div class="c-btn" onclick="switchCounter(2)">Yugal Mantra</div>
     </div>
-  </div>
 
-  <!-- Mala -->
-  <div class="mala-wrap">
-    <svg class="mala-svg" viewBox="0 0 200 200" id="malaSvg">
-      <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,215,0,0.07)" stroke-width="12"/>
-    </svg>
-    <div class="count-center">
-      <div class="cnum" id="cnum">0</div>
-      <div class="clbl">naam jap</div>
+    <!-- Top Stats / Voice -->
+    <div class="top-bar-jap">
+      <div class="mala-display">
+        <div>
+          <div class="mala-val" id="ui-malas">0</div>
+          <div class="mala-text">Malas Complete</div>
+        </div>
+        <div style="text-align:right">
+          <div class="mala-val" id="ui-today" style="font-size:1rem;">0</div>
+          <div class="mala-text">Today's Total</div>
+        </div>
+      </div>
+      
+      <div class="voice-mic" id="vMic" onclick="toggleVoice()">
+        🎙️
+      </div>
     </div>
-  </div>
-
-  <div class="mala-badge" id="malaBadge">0 / 108 beads · 0 malas</div>
-
-  <!-- TAP -->
-  <button class="tap-btn" id="tapBtn">
-    <div class="tap-outer"></div>
-    <div class="tap-inner">
-      <div class="tap-radha">Radha</div>
-      <div class="tap-hindi">राधे</div>
-      <div class="tap-hint" id="tapHint">tap to chant</div>
+    
+    <div class="voice-status" id="vStatBox" style="display:none; text-align:right; border-top:1px solid rgba(255,255,255,0.1); padding-top:5px;">
+      <div id="vPulse">Listening for "Radha" or "राधे"</div>
+      <div id="vTranscript" style="font-style:italic">...</div>
     </div>
-  </button>
 
-  <!-- Stats -->
-  <div class="stats-row">
-    <div class="stat-card"><div class="sval" id="sMalas">0</div><div class="slbl">Malas</div></div>
-    <div class="stat-card"><div class="sval" id="sToday">0</div><div class="slbl">Today</div></div>
-    <div class="stat-card"><div class="sval" id="sTotal">0</div><div class="slbl">Total</div></div>
-    <div class="stat-card"><div class="sval" id="sStreak"><span class="streak-fire">🔥</span>0</div><div class="slbl">Streak</div></div>
-  </div>
-
-  <!-- Controls -->
-  <div class="controls">
-    <button class="ctrl-btn" onclick="undoLast()">↩ Undo</button>
-    <button class="ctrl-btn danger" onclick="confirmReset()">Reset Day</button>
-  </div>
-</div>
-
-<!-- ══ GOALS PAGE ══ -->
-<div class="page goals-page" id="page-goals">
-
-  <div class="goals-title">🔥 Sadhana Goals</div>
-
-  <!-- Streak -->
-  <div class="streak-card">
-    <div class="streak-num" id="bigStreak">0</div>
-    <div class="streak-lbl">Day Streak 🔥</div>
-    <div class="streak-msg" id="streakMsg">Set a daily goal and start your streak!</div>
-  </div>
-
-  <!-- Today progress -->
-  <div class="today-progress">
-    <div class="tp-header">
-      <div class="tp-label">Today's Naam</div>
-      <div class="tp-pct" id="tpPct">0%</div>
+    <!-- Giant Central Counter -->
+    <div class="giant-counter">
+      <svg class="mala-svg" viewBox="0 0 200 200" id="malaSvg">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,215,0,0.1)" stroke-width="8"/>
+      </svg>
+      <div class="count-num" id="ui-count">0</div>
+      <div class="count-label" id="ui-label">राधे राधे</div>
     </div>
-    <div class="tp-bar-bg"><div class="tp-bar-fill" id="tpFill" style="width:0%;background:linear-gradient(90deg,var(--rose),var(--gold))"></div></div>
-    <div class="tp-details">
-      <span id="tpDone">Done: 0</span>
-      <span id="tpTarget">Target: —</span>
-      <span id="tpLeft">Left: —</span>
+
+    <div class="click-hint">Tap anywhere to chant</div>
+
+    <div class="controls-bottom">
+      <button class="c-btn-small" onclick="undo()">↩ Undo Last</button>
     </div>
   </div>
 
-  <!-- Penalty card -->
-  <div class="penalty-card none" id="penaltyCard">
-    <div class="pc-title good" id="pcTitle">✅ No Penalty</div>
-    <div class="pc-body" id="pcBody">You are on track! Keep chanting Radha Naam 🌸</div>
-  </div>
+  <!-- Fullscreen Click Overlay (injects ripples & increments) -->
+  <div class="click-overlay" id="clickArea"></div>
 
-  <!-- Goal setter -->
-  <div class="goal-setter">
-    <div class="gs-title">Set Your Daily Goal</div>
-    <div class="goal-options">
-      <div class="goal-opt" onclick="selectGoal(108)">108</div>
-      <div class="goal-opt" onclick="selectGoal(216)">216</div>
-      <div class="goal-opt" onclick="selectGoal(324)">324</div>
-      <div class="goal-opt" onclick="selectGoal(1008)">1008</div>
-    </div>
-    <div class="custom-goal-row">
-      <input class="custom-input" type="number" id="customGoalInput" placeholder="Custom number…" min="1" max="100000"/>
-      <button class="set-goal-btn" onclick="setCustomGoal()">Set Goal 🎯</button>
+  <!-- 📖 UPDESH PAGE -->
+  <div class="page updesh-page" id="pg-updesh">
+    <div class="up-title">Rasik Updesh</div>
+    <div class="divider">🌸 🌷 🌸</div>
+    
+    <div id="updesh-container">
+      <!-- Generated via JS -->
     </div>
   </div>
 
-</div>
+  <!-- 📊 PROGRESS PAGE -->
+  <div class="page" id="pg-prog">
+    <div class="up-title">Spiritual Journey</div>
+    <div class="divider">✨ ॐ ✨</div>
 
-<!-- ══ CHART PAGE ══ -->
-<div class="page chart-page" id="page-chart">
-  <div class="chart-title">Naam Jap Chart</div>
-  <div class="chart-subtitle">Your spiritual progress over time</div>
-
-  <div class="chart-toggle">
-    <button class="chart-tab active" id="ctWeek" onclick="switchChart('week')">Weekly</button>
-    <button class="chart-tab" id="ctMonth" onclick="switchChart('month')">Monthly</button>
-  </div>
-
-  <div class="chart-wrap">
-    <canvas id="chartCanvas" height="180"></canvas>
-  </div>
-
-  <div class="chart-stats">
-    <div class="cs-card"><div class="cs-val" id="csAvg">0</div><div class="cs-lbl">Daily Avg</div></div>
-    <div class="cs-card"><div class="cs-val" id="csBest">0</div><div class="cs-lbl">Best Day</div></div>
-    <div class="cs-card"><div class="cs-val" id="csTotal">0</div><div class="cs-lbl">Period Total</div></div>
-  </div>
-</div>
-
-<!-- ══ PRARTHANA PAGE ══ -->
-<div class="page prarthana-page" id="page-prarthana">
-
-  <span class="prar-om">ॐ</span>
-  <div class="prar-title">Radha Prarthana</div>
-  <div class="prar-subtitle">राधे, तेरे बिना मैं नहीं रह सकता</div>
-
-  <div class="lotus-divider">🌸 🌷 🌸</div>
-
-  <div class="prayer-card">
-    <div class="prayer-hindi">
-      हे राधे! तुम्हारे बिना मेरा<br>
-      यह जीवन अधूरा है।<br>
-      तुम्हारा नाम ही मेरी<br>
-      सांस है, मेरा जीवन है।<br>
-      राधे राधे राधे।।
+    <div class="prog-grid">
+      <div class="p-card">
+        <div class="p-lbl">Total Naam</div>
+        <div class="p-val" id="ui-tot-c1">0</div>
+        <div class="p-lbl" style="color:rgba(255,255,255,0.4)">Counter 1</div>
+      </div>
+      <div class="p-card">
+        <div class="p-lbl">Total Naam</div>
+        <div class="p-val" id="ui-tot-c2">0</div>
+        <div class="p-lbl" style="color:rgba(255,255,255,0.4)">Counter 2</div>
+      </div>
+      <div class="p-card">
+        <div class="p-lbl">All Malas</div>
+        <div class="p-val" id="ui-tot-malas">0</div>
+      </div>
+      <div class="p-card">
+        <div class="p-lbl">Session Timer</div>
+        <div class="p-val" id="ui-session">0:00</div>
+      </div>
     </div>
-    <div class="prayer-english">
-      O Radhe! Without You, my life is incomplete.<br>
-      Your Name is my every breath, my very life.<br>
-      Radhe Radhe Radhe.
+
+    <!-- 7 Day Heatmap -->
+    <div class="heatmap">
+      <div class="hm-title">7-Day Devotion (C1)</div>
+      <div class="hm-grid" id="hmGrid">
+        <!-- Generated -->
+      </div>
     </div>
   </div>
 
-  <div class="lotus-divider">✨ ॐ ✨</div>
+  <!-- 🎯 GOALS PAGE -->
+  <div class="page" id="pg-goals">
+    <div class="up-title">Sadhana Goals</div>
+    <div class="divider">🔥 🌺 🔥</div>
 
-  <div class="prayer-card">
-    <div class="prayer-hindi">
-      राधे राधे जपत रहो,<br>
-      राधे नाम की माला।<br>
-      राधे बिन सब सूना है,<br>
-      राधे सबसे निराला।।
+    <div class="gs-card">
+      <div class="p-lbl">Current Streak</div>
+      <div class="gs-streak" id="ui-streak">0</div>
+      <div style="font-style:italic; font-size:0.8rem; color:rgba(255,255,255,0.6)">Keep chanting every day to maintain the fire!</div>
     </div>
-    <div class="prayer-english">
-      Keep chanting Radhe Radhe,<br>
-      the garland of Radha's Name.<br>
-      Without Radhe all is empty,<br>
-      Radhe is the most unique of all.
+
+    <div class="gs-card">
+      <div class="p-lbl">Daily Target (Counter 1)</div>
+      <div class="p-val" id="ui-goal-disp" style="margin-top:10px;">Not Set</div>
+      <div class="goal-opts">
+        <div class="g-opt" onclick="setGoal(108)">108</div>
+        <div class="g-opt" onclick="setGoal(1008)">1008</div>
+        <input type="number" class="g-opt" id="gCustom" placeholder="Custom" onchange="setGoal(this.value)">
+      </div>
+      <div style="margin-top:10px; font-size:0.75rem; color:var(--text-dim)">
+        If you miss a day, the remaining amount is added to tomorrow's goal as penance.
+      </div>
     </div>
   </div>
 
-  <div class="lotus-divider">🌺 🌸 🌺</div>
+  <!-- 🙏 PRARTHANA PAGE -->
+  <div class="page" id="pg-pray">
+    <div class="up-title">Radha Prarthana</div>
+    <div class="divider">🌸 🌷 🌸</div>
 
-  <!-- Daily quote -->
-  <div class="quote-card" id="dailyQuote">
-    <div class="quote-text" id="quoteText">Loading today's inspiration…</div>
-    <div class="quote-source" id="quoteSource">Daily Inspiration</div>
+    <div class="prayer">
+      <div class="pr-hin">हे राधे! तुम्हारे बिना मेरा<br>यह जीवन अधूरा है।<br>तुम्हारा नाम ही मेरी<br>सांस है, मेरा जीवन है।</div>
+      <div class="pr-eng">O Radhe! Without You, my life is incomplete.<br>Your Name is my every breath, my very life.</div>
+    </div>
+    <div class="divider">✨</div>
+    <div class="prayer">
+      <div class="pr-hin">राधे राधे जपत रहो,<br>राधे नाम की माला।<br>राधे बिन सब सूना है,<br>राधे सबसे निराला।।</div>
+      <div class="pr-eng">Keep chanting Radhe Radhe,<br>the garland of Radha's Name.<br>Without Radhe all is empty.</div>
+    </div>
+    
+    <div style="text-align:center; margin-top:30px;">
+      <div class="btn" onclick="switchMainTab('jap')">Begin Naam Jap Now</div>
+    </div>
   </div>
 
-  <button class="prar-naam-btn" onclick="switchTab('counter');setTimeout(()=>increment('tap'),200)">
-    🌸 Begin Naam Jap Now
-  </button>
-
-  <div class="prayer-card">
-    <div class="prayer-hindi">
-      जब भी श्वास लो, राधे कहो।<br>
-      जब भी चलो, राधे गुनगुनाओ।<br>
-      हर पल, हर क्षण — राधे राधे।।
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="tab active" data-target="jap" onclick="switchMainTab('jap')">
+      <span class="tab-icon">📿</span>
+      <span class="tab-label">Jap</span>
     </div>
-    <div class="prayer-english">
-      With every breath, say Radhe.<br>
-      With every step, hum Radhe.<br>
-      Every moment, every instant — Radhe Radhe.
+    <div class="tab" data-target="updesh" onclick="switchMainTab('updesh')">
+      <span class="tab-icon">📖</span>
+      <span class="tab-label">Updesh</span>
+    </div>
+    <div class="tab" data-target="prog" onclick="switchMainTab('prog')">
+      <span class="tab-icon">📊</span>
+      <span class="tab-label">Progress</span>
+    </div>
+    <div class="tab" data-target="goals" onclick="switchMainTab('goals')">
+      <span class="tab-icon">🎯</span>
+      <span class="tab-label">Goals</span>
+    </div>
+    <div class="tab" data-target="pray" onclick="switchMainTab('pray')">
+      <span class="tab-icon">🙏</span>
+      <span class="tab-label">Prayer</span>
     </div>
   </div>
 
 </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <span class="t-icon" id="tIcon">🌸</span>
-  <div class="t-text" id="tText">Jai Radha!</div>
-  <div class="t-sub" id="tSub">राधे राधे</div>
-</div>
-
-<!-- PENALTY MODAL -->
-<div class="modal-overlay hidden" id="penaltyModal">
-  <div class="modal-box">
-    <span class="modal-icon">🙏⚠️</span>
-    <div class="modal-title">Sadhana Penalty!</div>
-    <div class="modal-body" id="modalBody">You missed your naam goal yesterday. As penance, you must chant extra naam today.</div>
-    <span class="modal-penalty-num" id="modalPenaltyNum">+0</span>
-    <div style="font-style:italic;color:rgba(255,200,180,.7);font-size:.8rem;margin-bottom:16px;">extra naam added to today's goal · राधे राधे 🌸</div>
-    <button class="modal-btn" onclick="closePenaltyModal()">🌸 I Accept — Radhe Radhe!</button>
-  </div>
+<!-- Global Toast -->
+<div class="toast" id="glbToast">
+  <div class="t-icn" id="glbIcn">🌸</div>
+  <div class="t-msg" id="glbMsg">Message</div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════
+/* --- DATA MODELS & STATE --- */
+// Backward compatible state object
 var state = {
-  count:0, malas:0, today:0, total:0,
+  // Global
+  activeCounter: 1,
   lastDate: new Date().toDateString(),
-  streak:0, lastStreakDate:'',
-  dailyGoal:0,
-  penalty:0,      // extra naam carried from yesterday's miss
-  dailyLog:{},    // { dateStr: count }
-  sessions:[]
+  streak: 0,
+  dailyGoal: 0,
+  penalty: 0,
+  // Counter 1 (Original)
+  count: 0, malas: 0, today: 0, total: 0,
+  dailyLog: {}, // {date: count}
+  // Counter 2 (New)
+  c2_count: 0, c2_malas: 0, c2_today: 0, c2_total: 0,
+  c2_dailyLog: {}
 };
 
-var RADHA_QUOTES = [
-  { text:"जहाँ राधा का नाम है, वहाँ वृंदावन है।", src:"Vaishnav Tradition" },
-  { text:"Radha's name on your lips is Vrindavan in your heart.", src:"Bhakti Wisdom" },
-  { text:"राधे राधे बोलने से मन शुद्ध होता है, आत्मा प्रकाशित होती है।", src:"Sant Vani" },
-  { text:"The sweetest sound in all creation is the name of Radha.", src:"Bhakti Literature" },
-  { text:"जो राधा नाम जपे निरंतर, उसे मिले वृंदावन धाम।", src:"Devotional Wisdom" },
-  { text:"Radhe! Your name is the boat that carries us across the ocean of this world.", src:"Prarthana" },
-  { text:"हर सांस में राधे, हर धड़कन में राधे — यही साधना है।", src:"Sant Teaching" },
-  { text:"One who constantly chants Radha Naam becomes dear to Radha and Krishna both.", src:"Bhakti Shastra" },
-  { text:"राधा प्रेम की देवी हैं — उनका नाम प्रेम को जगाता है।", src:"Vaishnav Philosophy" },
-  { text:"Even the birds of Vrindavan chant Radhe Radhe — can we do any less?", src:"Bhakti Katha" },
-  { text:"राधे नाम में वह शक्ति है जो संसार के सारे दुखों को हर लेती है।", src:"Sant Vani" },
-  { text:"Forget the world, forget your worries — just say Radhe. Everything else follows.", src:"Devotional Wisdom" }
+// Rasik Updesh Content (To increase love for Radha Rani)
+var UPDESH_DATA = [
+  {
+    cat: "श्री हित हरिवंश (Shri Hit Harivansh)",
+    hi: "राधा नाम परम सुखदाई, भजत मिटत सब पाप।",
+    en: "The name of Radha gives supreme joy; by chanting it, all sins are erased."
+  },
+  {
+    cat: "प्रेम भक्ति (Prem Bhakti)",
+    hi: "जहाँ राधा का नाम है, वहाँ वृंदावन है।",
+    en: "Wherever the name of Radha is sung, that place becomes Vrindavan."
+  },
+  {
+    cat: "स्वामी हरिदास (Swami Haridas)",
+    hi: "राधे राधे रटत ही, भव सागर तरि जाय।",
+    en: "Only by constantly chanting 'Radhe Radhe', one crosses the ocean of material existence."
+  },
+  {
+    cat: "राधा तत्व (Radha Tattva)",
+    hi: "कृष्ण की आत्मा राधा हैं, और राधा का प्राण कृष्ण।",
+    en: "Radha is the soul of Krishna, and Krishna is the life-breath of Radha."
+  },
+  {
+    cat: "विरह भाव (Viraha Bhav)",
+    hi: "हे राधिके! तेरे दरस बिनु, नैन जल भरि आय।",
+    en: "O Radhika! Without Your divine sight, my eyes are constantly filled with tears."
+  }
 ];
 
-// ═══════════════════════════════════════════
-//  PERSISTENCE
-// ═══════════════════════════════════════════
-function save(){
-  state.dailyLog[state.lastDate] = state.today;
-  try{ localStorage.setItem('radhaJapV3', JSON.stringify(state)); }catch(e){}
+/* --- INITIALIZATION --- */
+function init() {
+  loadState();
+  initUpdesh();
+  generatePetals(15);
+  setInterval(updateSessionTimer, 1000);
+  window.sessionStart = Date.now();
 }
 
-function load(){
-  try{
-    var s = localStorage.getItem('radhaJapV3');
-    if(s){
-      var p = JSON.parse(s);
-      state = Object.assign({}, state, p);
-      if(!state.dailyLog) state.dailyLog={};
-      if(!state.sessions) state.sessions=[];
+function saveState() {
+  localStorage.setItem('radhaJapV4', JSON.stringify(state));
+}
+
+function loadState() {
+  try {
+    var v4 = localStorage.getItem('radhaJapV4');
+    var v3 = localStorage.getItem('radhaJapV3'); // Legacy migration
+    
+    if (v4) {
+      Object.assign(state, JSON.parse(v4));
+    } else if (v3) {
+      Object.assign(state, JSON.parse(v3));
+      // Initialize C2 fields if missing
+      state.c2_count = 0; state.c2_malas = 0; state.c2_today = 0; state.c2_total = 0; state.c2_dailyLog = {};
     }
-  }catch(e){}
+  } catch(e) {}
 
   var today = new Date().toDateString();
-  if(state.lastDate !== today){
-    // NEW DAY — check penalty
-    checkAndApplyPenalty(state.lastDate, today);
-    // Update streak
-    updateStreak(state.lastDate, today);
-    // Save yesterday's log
-    state.dailyLog[state.lastDate] = state.today;
-    // Reset daily counter
-    state.today=0; state.count=0; state.malas=0;
-    state.lastDate = today;
-    save();
+  if(state.lastDate !== today) {
+    handleNewDay(today);
   }
 
-  drawMala();
+  // Ensure default structure
+  if(!state.c2_dailyLog) state.c2_dailyLog = {};
+
   updateUI();
-  updateGoalBanner();
-  updateGoalsPage();
-  setDailyQuote();
-  highlightGoalOptions();
-  checkPenaltyModal();
+  updateProgressUI();
+  switchCounter(state.activeCounter || 1);
 }
 
-function checkAndApplyPenalty(oldDate, newDate){
-  if(state.dailyGoal <= 0) return;
-  var done = state.dailyLog[oldDate] || state.today;
-  var target = state.dailyGoal + state.penalty;
-  if(done < target){
-    var missed = target - done;
-    state.penalty = missed; // carry forward as penalty
-  } else {
-    state.penalty = 0;
-  }
-}
-
-function updateStreak(oldDate, newDate){
-  if(state.dailyGoal <= 0) return;
-  var done = state.dailyLog[oldDate] || state.today;
-  var target = state.dailyGoal;
-  if(done >= target){
-    state.streak = (state.streak||0) + 1;
-    state.lastStreakDate = oldDate;
-  } else {
-    // only break streak if also missed previous days
-    // (grace: streak breaks only if missed 2 days in a row)
-    state.streak = 0;
-  }
-}
-
-function checkPenaltyModal(){
-  if(state.penalty > 0 && !state._penaltyShown){
-    state._penaltyShown = true;
-    showPenaltyModal();
-  }
-}
-
-// ═══════════════════════════════════════════
-//  MALA DRAWING
-// ═══════════════════════════════════════════
-function drawMala(){
-  var svg = document.getElementById('malaSvg');
-  var old = svg.querySelectorAll('.bead');
-  for(var i=0;i<old.length;i++) old[i].remove();
-  if(!svg.querySelector('defs')){
-    var defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
-    defs.innerHTML='<filter id="glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
-    svg.insertBefore(defs,svg.firstChild);
-  }
-  var total=108,cx=100,cy=100,r=85,bead=state.count%108;
-  for(var i=0;i<total;i++){
-    var a=(i/total)*2*Math.PI-Math.PI/2;
-    var x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
-    var active=i<bead;
-    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    c.setAttribute('cx',x);c.setAttribute('cy',y);
-    c.setAttribute('r',i%27===0?4:2.5);
-    c.setAttribute('fill',active?(i%27===0?'#FFD700':'#FF85A1'):'rgba(255,215,0,0.13)');
-    if(active)c.setAttribute('filter','url(#glow)');
-    c.classList.add('bead');
-    svg.appendChild(c);
-  }
-}
-
-// ═══════════════════════════════════════════
-//  UI UPDATE
-// ═══════════════════════════════════════════
-function updateUI(){
-  document.getElementById('cnum').textContent = state.count;
-  document.getElementById('sMalas').textContent = state.malas;
-  document.getElementById('sToday').textContent = state.today;
-  document.getElementById('sTotal').textContent = state.total;
-  document.getElementById('sStreak').innerHTML = '<span class="streak-fire">🔥</span>'+(state.streak||0);
-  var bead = state.count%108;
-  document.getElementById('malaBadge').textContent = bead+' / 108 beads · '+state.malas+' mala'+(state.malas!==1?'s':'');
-  updateGoalBanner();
-  updateGoalsPage();
-}
-
-function updateGoalBanner(){
-  var banner = document.getElementById('goalBanner');
-  var nums = document.getElementById('goalNums');
-  var fill = document.getElementById('goalBarFill');
-  if(!state.dailyGoal){ nums.textContent='— not set —'; fill.style.width='0%'; banner.classList.remove('has-penalty'); return; }
-  var target = state.dailyGoal + (state.penalty||0);
-  var done = state.today;
-  var pct = Math.min(100, Math.round((done/target)*100));
-  nums.textContent = done+' / '+target+(state.penalty>0?' (+'+state.penalty+' penalty)':'');
-  fill.style.width = pct+'%';
-  fill.classList.toggle('complete', pct>=100);
-  banner.classList.toggle('has-penalty', state.penalty>0);
-}
-
-function updateGoalsPage(){
-  // Streak
-  document.getElementById('bigStreak').textContent = (state.streak||0)+'🔥';
-  var msgs = ['Set a goal and start your streak!','Great start! Keep going!','Two days strong! 🌸','Three days — beautiful!','Keep the flame alive! 🔥','Five days of devotion! 🙏','A week of Radha naam! 🌸✨','Amazing dedication! राधे राधे!'];
-  var s = state.streak||0;
-  document.getElementById('streakMsg').textContent = s < msgs.length ? msgs[s] : 'Extraordinary devotion — राधे राधे! 🌸🔥';
-
-  // Today progress
-  if(!state.dailyGoal){
-    document.getElementById('tpPct').textContent='—';
-    document.getElementById('tpFill').style.width='0%';
-    document.getElementById('tpDone').textContent='Done: '+state.today;
-    document.getElementById('tpTarget').textContent='Target: not set';
-    document.getElementById('tpLeft').textContent='';
-  } else {
-    var target = state.dailyGoal + (state.penalty||0);
-    var done = state.today;
-    var pct = Math.min(100,Math.round((done/target)*100));
-    var left = Math.max(0,target-done);
-    document.getElementById('tpPct').textContent=pct+'%';
-    document.getElementById('tpFill').style.width=pct+'%';
-    document.getElementById('tpFill').style.background = pct>=100 ? 'linear-gradient(90deg,#00e676,#69f0ae)' : 'linear-gradient(90deg,var(--rose),var(--gold))';
-    document.getElementById('tpDone').textContent='Done: '+done;
-    document.getElementById('tpTarget').textContent='Target: '+target+(state.penalty>0?' (incl. +'+state.penalty+' penalty)':'');
-    document.getElementById('tpLeft').textContent = left>0 ? 'Left: '+left : '✅ Completed!';
-  }
-
-  // Penalty card
-  var pc = document.getElementById('penaltyCard');
-  var pct2 = document.getElementById('pcTitle');
-  var pcb = document.getElementById('pcBody');
-  if(!state.penalty || state.penalty<=0){
-    pc.className='penalty-card none';
-    pct2.className='pc-title good';
-    pct2.textContent='✅ No Penalty';
-    pcb.textContent='You are on track! Every naam brings you closer to Radha. 🌸';
-  } else {
-    pc.className='penalty-card';
-    pct2.className='pc-title bad';
-    pct2.textContent='⚠️ Sadhana Penalty — '+state.penalty+' extra naam!';
-    pcb.innerHTML='You missed <b>'+state.penalty+' naam</b> from yesterday\'s goal.<br><span class="pc-num">+'+state.penalty+'</span>Extra naam added as penance today.<br><em>Radhe forgives — now chant with more love! 🙏</em>';
-  }
-}
-
-// ═══════════════════════════════════════════
-//  INCREMENT
-// ═══════════════════════════════════════════
-function increment(src){
-  state.count++; state.today++; state.total++;
-  state.sessions.push({date:state.lastDate,source:src||'tap',ts:Date.now()});
-  if(state.sessions.length>5000) state.sessions=state.sessions.slice(-5000);
-  if(state.count%108===0){
-    state.malas++;
-    showToast('🌸','Jai Radha Rani! 🎉','Mala #'+state.malas+' Complete! राधे राधे');
-  } else if(state.count%27===0){
-    showToast('🌷','Radhe Radhe!',state.count+' naam complete 🙏');
-  }
-  // Goal complete
-  var target = (state.dailyGoal||0)+(state.penalty||0);
-  if(target>0 && state.today===target){
-    showToast('🎯','Daily Goal Complete!','Radha is pleased! राधे राधे 🌸');
-    state.penalty=0;
-  }
-  var d=document.getElementById('cnum');
-  d.classList.remove('bump'); void d.offsetWidth; d.classList.add('bump');
-  drawMala(); updateUI(); save();
-}
-
-// ═══════════════════════════════════════════
-//  TAP
-// ═══════════════════════════════════════════
-document.getElementById('tapBtn').addEventListener('click',function(e){
-  increment('tap');
-  doRipple(); doBurst(e.clientX||window.innerWidth/2, e.clientY||window.innerHeight*.55);
-});
-document.getElementById('tapBtn').addEventListener('touchstart',function(e){
-  e.preventDefault();
-  increment('tap');
-  doRipple(); doBurst(e.touches[0].clientX, e.touches[0].clientY);
-},{passive:false});
-document.addEventListener('keydown',function(e){
-  if(e.code==='Space'||e.code==='Enter'){e.preventDefault();increment('tap');doBurst(window.innerWidth/2,window.innerHeight/2);}
-});
-
-function doRipple(){
-  var btn=document.getElementById('tapBtn');
-  var r=document.createElement('div');r.className='ripple';
-  var sz=btn.getBoundingClientRect().width;
-  r.style.cssText='width:'+sz+'px;height:'+sz+'px;left:0;top:0;';
-  btn.appendChild(r);setTimeout(function(){r.remove();},700);
-}
-function doBurst(x,y){
-  var emojis=['🌸','🌷','✨','💫','🌼','💛','🌺','🪷'];
-  var b=document.createElement('div');b.className='burst';
-  b.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-  b.style.left=(x-16)+'px';b.style.top=(y-16)+'px';
-  document.body.appendChild(b);setTimeout(function(){b.remove();},1200);
-}
-
-// ═══════════════════════════════════════════
-//  VOICE
-// ═══════════════════════════════════════════
-var recog=null,voiceOn=false,vCool=false;
-var KEYWORDS=['radha','radhe','राधे','राधा','radhey','rade'];
-
-function toggleVoice(){
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast('⚠️','Not Supported','Use Chrome for voice recognition');return;}
-  voiceOn?stopVoice():startVoice();
-}
-function startVoice(){
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recog=new SR(); recog.continuous=true; recog.interimResults=true; recog.lang='hi-IN';
-  recog.onstart=function(){
-    voiceOn=true;
-    document.getElementById('voiceBtn').classList.add('listening');
-    document.getElementById('voiceBtn').textContent='🔴';
-    document.getElementById('vstatus').textContent='🎙 Listening… say Radha / राधे';
-    document.getElementById('tapHint').textContent='say "Radhe" to count';
-  };
-  recog.onresult=function(evt){
-    var txt='';
-    for(var i=evt.resultIndex;i<evt.results.length;i++) txt+=evt.results[i][0].transcript;
-    var low=txt.toLowerCase().trim();
-    document.getElementById('vtrans').textContent=(low||'…').slice(0,52);
-    if(!vCool && KEYWORDS.some(function(k){return low.indexOf(k)!==-1;})){
-      vCool=true; increment('voice'); doBurst(window.innerWidth/2,window.innerHeight*.5);
-      document.getElementById('vtrans').textContent='✅ '+low.slice(0,40);
-      setTimeout(function(){vCool=false;},900);
-    }
-  };
-  recog.onerror=function(e){
-    if(e.error==='not-allowed') showToast('🎙','Mic Blocked','Allow microphone in browser settings');
-    else if(e.error!=='aborted') setTimeout(function(){if(voiceOn)try{recog.start();}catch(ex){}},400);
-  };
-  recog.onend=function(){if(voiceOn) setTimeout(function(){try{recog.start();}catch(ex){}},300);};
-  try{recog.start();}catch(e){}
-}
-function stopVoice(){
-  voiceOn=false;
-  document.getElementById('voiceBtn').classList.remove('listening');
-  document.getElementById('voiceBtn').textContent='🎙️';
-  document.getElementById('vstatus').textContent='Voice: Off — tap mic to start';
-  document.getElementById('vtrans').textContent='Say "Radha" or "Radhe" to count…';
-  document.getElementById('tapHint').textContent='tap to chant';
-  try{recog&&recog.stop();}catch(e){}
-}
-
-// ═══════════════════════════════════════════
-//  GOAL SETTER
-// ═══════════════════════════════════════════
-function selectGoal(n){
-  state.dailyGoal=n;
-  highlightGoalOptions();
-  save(); updateGoalBanner(); updateGoalsPage();
-  showToast('🎯','Goal Set!','Daily target: '+n+' naam · राधे राधे');
-}
-function setCustomGoal(){
-  var v=parseInt(document.getElementById('customGoalInput').value);
-  if(!v||v<1){showToast('⚠️','Invalid','Enter a number greater than 0');return;}
-  state.dailyGoal=v;
-  highlightGoalOptions();
-  save(); updateGoalBanner(); updateGoalsPage();
-  showToast('🎯','Custom Goal Set!','Daily target: '+v+' naam 🌸');
-}
-function highlightGoalOptions(){
-  document.querySelectorAll('.goal-opt').forEach(function(el){
-    el.classList.toggle('active', parseInt(el.textContent)===state.dailyGoal);
-  });
-}
-
-// ═══════════════════════════════════════════
-//  UNDO / RESET
-// ═══════════════════════════════════════════
-function undoLast(){
-  if(state.count<=0)return;
-  state.count--;state.today=Math.max(0,state.today-1);state.total=Math.max(0,state.total-1);
-  state.malas=Math.floor(state.count/108);
-  if(state.sessions.length>0)state.sessions.pop();
-  drawMala();updateUI();save();
-}
-function confirmReset(){
-  if(!confirm("Save today's count and reset counter for a fresh session?"))return;
-  state.count=0;state.malas=0;
-  drawMala();updateUI();save();
-  showToast('🙏','Reset!','Fresh session · राधे राधे');
-}
-
-// ═══════════════════════════════════════════
-//  PENALTY MODAL
-// ═══════════════════════════════════════════
-function showPenaltyModal(){
-  document.getElementById('modalBody').textContent='You missed your naam goal yesterday ('+state.penalty+' naam short). As sadhana penance, this has been added to today\'s target. Radhe forgives — chant with more love today! 🌸';
-  document.getElementById('modalPenaltyNum').textContent='+'+state.penalty;
-  document.getElementById('penaltyModal').classList.remove('hidden');
-}
-function closePenaltyModal(){
-  document.getElementById('penaltyModal').classList.add('hidden');
-}
-
-// ═══════════════════════════════════════════
-//  CHART
-// ═══════════════════════════════════════════
-var chartMode='week';
-function switchChart(mode){
-  chartMode=mode;
-  document.getElementById('ctWeek').classList.toggle('active',mode==='week');
-  document.getElementById('ctMonth').classList.toggle('active',mode==='month');
-  renderChart();
-}
-
-function renderChart(){
-  var canvas=document.getElementById('chartCanvas');
-  if(!canvas) return;
-  var ctx=canvas.getContext('2d');
-  var dpr=window.devicePixelRatio||1;
-  var W=canvas.parentElement.offsetWidth-24;
-  var H=180;
-  canvas.width=W*dpr; canvas.height=H*dpr;
-  canvas.style.width=W+'px'; canvas.style.height=H+'px';
-  ctx.scale(dpr,dpr);
-
-  // Build data
-  var labels=[], data=[], today=new Date();
-  var days = chartMode==='week'?7:30;
-  for(var i=days-1;i>=0;i--){
-    var d=new Date(today); d.setDate(d.getDate()-i);
-    var key=d.toDateString();
-    var val=(key===state.lastDate)?state.today:(state.dailyLog[key]||0);
-    data.push(val);
-    if(chartMode==='week'){
-      labels.push(['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()]);
+function handleNewDay(todayStr) {
+  // Goal Penalty Check for C1
+  if(state.dailyGoal > 0) {
+    var done = state.today; 
+    var target = state.dailyGoal + state.penalty;
+    if(done < target) {
+      state.penalty = (target - done);
+      state.streak = 0; // Broken streak
     } else {
-      labels.push(i%5===0?d.getDate():'');
+      state.penalty = 0;
+      state.streak++;
     }
   }
+  
+  // Save log
+  state.dailyLog[state.lastDate] = state.today;
+  state.c2_dailyLog[state.lastDate] = state.c2_today;
+  
+  // Reset daily stats
+  state.today = 0; state.count = 0; // retain malas or reset? Usually count resets daily
+  state.c2_today = 0; state.c2_count = 0;
+  state.lastDate = todayStr;
+  saveState();
 
-  var maxVal=Math.max.apply(null,data.concat([state.dailyGoal||1,1]));
-  var pad={top:16,right:10,bottom:32,left:38};
-  var cw=W-pad.left-pad.right, ch=H-pad.top-pad.bottom;
-  var bw=Math.max(4,(cw/days)-3);
-
-  ctx.clearRect(0,0,W,H);
-
-  // Grid lines
-  ctx.strokeStyle='rgba(255,215,0,0.07)'; ctx.lineWidth=1;
-  for(var g=0;g<=4;g++){
-    var gy=pad.top+ch*(1-g/4);
-    ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(W-pad.right,gy);ctx.stroke();
-    ctx.fillStyle='rgba(255,215,0,0.3)';ctx.font='9px Crimson Pro,serif';ctx.textAlign='right';
-    ctx.fillText(Math.round(maxVal*g/4),pad.left-4,gy+3);
+  if(state.penalty > 0) {
+    setTimeout(()=>toast('⚠️', 'Sadhana Penalty: +'+state.penalty+' naam added today.'), 1000);
   }
-
-  // Goal line
-  if(state.dailyGoal>0){
-    var goalY=pad.top+ch*(1-state.dailyGoal/maxVal);
-    ctx.strokeStyle='rgba(255,215,0,0.35)'; ctx.lineWidth=1.2; ctx.setLineDash([4,4]);
-    ctx.beginPath();ctx.moveTo(pad.left,goalY);ctx.lineTo(W-pad.right,goalY);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle='rgba(255,215,0,0.55)';ctx.font='8px Crimson Pro,serif';ctx.textAlign='left';
-    ctx.fillText('Goal',W-pad.right-24,goalY-2);
-  }
-
-  // Bars
-  for(var i=0;i<days;i++){
-    var x=pad.left+(cw/days)*i+(cw/days-bw)/2;
-    var bh=data[i]>0?(ch*(data[i]/maxVal)):2;
-    var y=pad.top+ch-bh;
-    var isToday=(i===days-1);
-    var grad=ctx.createLinearGradient(0,y,0,y+bh);
-    var metGoal=state.dailyGoal>0&&data[i]>=state.dailyGoal;
-    if(metGoal){ grad.addColorStop(0,'rgba(105,240,174,0.9)');grad.addColorStop(1,'rgba(0,230,118,0.6)'); }
-    else if(isToday){ grad.addColorStop(0,'rgba(255,133,161,0.95)');grad.addColorStop(1,'rgba(255,107,26,0.7)'); }
-    else { grad.addColorStop(0,'rgba(255,215,0,0.6)');grad.addColorStop(1,'rgba(255,107,26,0.35)'); }
-    ctx.fillStyle=grad;
-    var radius=Math.min(4,bw/2);
-    ctx.beginPath();
-    if(ctx.roundRect) ctx.roundRect(x,y,bw,bh,radius);
-    else ctx.rect(x,y,bw,bh);
-    ctx.fill();
-    // Label
-    ctx.fillStyle='rgba(255,215,0,0.45)';ctx.font='9px Crimson Pro,serif';ctx.textAlign='center';
-    if(labels[i]!=='') ctx.fillText(labels[i],x+bw/2,H-pad.bottom+12);
-    // Value on bar
-    if(data[i]>0 && bh>16){
-      ctx.fillStyle='rgba(255,255,255,0.7)';ctx.font='bold 8px Crimson Pro,serif';
-      ctx.fillText(data[i],x+bw/2,y+10);
-    }
-  }
-
-  // Chart stats
-  var periodData=data.filter(function(v){return v>0;});
-  var avg=periodData.length?Math.round(periodData.reduce(function(a,b){return a+b;},0)/periodData.length):0;
-  var best=Math.max.apply(null,data);
-  var tot=data.reduce(function(a,b){return a+b;},0);
-  document.getElementById('csAvg').textContent=avg;
-  document.getElementById('csBest').textContent=best;
-  document.getElementById('csTotal').textContent=tot;
 }
 
-// ═══════════════════════════════════════════
-//  TABS
-// ═══════════════════════════════════════════
-function switchTab(tab){
-  document.querySelectorAll('.tab').forEach(function(t,i){
-    t.classList.toggle('active',['counter','goals','chart','prarthana'][i]===tab);
-  });
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-  document.getElementById('page-'+tab).classList.add('active');
-  if(tab==='chart') setTimeout(renderChart,80);
-  if(tab==='goals') updateGoalsPage();
-}
-
-// ═══════════════════════════════════════════
-//  DAILY QUOTE
-// ═══════════════════════════════════════════
-function setDailyQuote(){
-  var idx=new Date().getDate()%RADHA_QUOTES.length;
-  var q=RADHA_QUOTES[idx];
-  document.getElementById('quoteText').textContent=q.text;
-  document.getElementById('quoteSource').textContent='— '+q.src;
-}
-
-// ═══════════════════════════════════════════
-//  TOAST
-// ═══════════════════════════════════════════
+/* --- UI NOTIFICATIONS --- */
 var tTimer;
-function showToast(icon,text,sub){
-  clearTimeout(tTimer);
-  document.getElementById('tIcon').textContent=icon;
-  document.getElementById('tText').textContent=text;
-  document.getElementById('tSub').textContent=sub;
-  var t=document.getElementById('toast');
+function toast(icon, msg) {
+  var t = document.getElementById('glbToast');
+  document.getElementById('glbIcn').textContent = icon;
+  document.getElementById('glbMsg').textContent = msg;
   t.classList.add('show');
-  tTimer=setTimeout(function(){t.classList.remove('show');},2800);
+  clearTimeout(tTimer);
+  tTimer = setTimeout(()=> t.classList.remove('show'), 3000);
 }
 
-// ═══════════════════════════════════════════
-//  PETALS
-// ═══════════════════════════════════════════
-['🌸','🌷','🌺','🌼','✿','🌸','🌷'].forEach(function(_,i){
-  var p=document.createElement('div'); p.className='petal';
-  p.textContent=['🌸','🌷','🌺','🌼','✿'][i%5];
-  p.style.cssText='left:'+Math.random()*100+'vw;animation-duration:'+(13+Math.random()*14)+'s;animation-delay:'+(Math.random()*18)+'s;font-size:'+(0.6+Math.random()*0.65)+'rem;';
-  document.body.appendChild(p);
+/* --- TABS & COUNTERS --- */
+function switchMainTab(tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab[data-target="'+tabId+'"]').classList.add('active');
+  
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-'+tabId).classList.add('active');
+
+  if(tabId === 'prog') updateProgressUI();
+}
+
+function switchCounter(cNum) {
+  state.activeCounter = cNum;
+  var sw = document.getElementById('cSwitch');
+  sw.setAttribute('data-active', cNum);
+  sw.children[1].classList.toggle('active', cNum === 1);
+  sw.children[2].classList.toggle('active', cNum === 2);
+  
+  var lbl = cNum === 1 ? 'राधे राधे' : 'श्री युगल मंत्र';
+  document.getElementById('ui-label').textContent = lbl;
+
+  updateUI();
+  saveState();
+}
+
+/* --- COUNTING LOGIC --- */
+function incrementCount(fromVoice = false) {
+  var isC1 = state.activeCounter === 1;
+  
+  if (isC1) {
+    state.count++; state.today++; state.total++;
+    state.malas = Math.floor(state.total / 108); // total malas across lifetime
+  } else {
+    state.c2_count++; state.c2_today++; state.c2_total++;
+    state.c2_malas = Math.floor(state.c2_total / 108);
+  }
+
+  // Visuals
+  var cntDiv = document.getElementById('ui-count');
+  cntDiv.classList.remove('bump');
+  void cntDiv.offsetWidth; // trigger reflow
+  cntDiv.classList.add('bump');
+  
+  updateUI();
+  drawMalaSvg();
+  saveState();
+
+  // Milestone triggers
+  var currentCount = isC1 ? state.count : state.c2_count;
+  if (currentCount % 108 === 0) {
+    toast('📿', '1 Mala Complete! Jai Shri Radhe!');
+    createMegaBurst();
+  } else if (currentCount % 54 === 0) {
+    toast('🌸', 'Half mala done. Beautiful!');
+  }
+
+  // Goal check (C1 only for daily goals)
+  if(isC1 && state.dailyGoal > 0) {
+    var target = state.dailyGoal + state.penalty;
+    if(state.today === target) {
+      toast('🎯', 'Daily Goal Achieved! Radha Rani is pleased.');
+      state.penalty = 0; saveState();
+      createMegaBurst();
+    }
+  }
+}
+
+function undo() {
+  if(state.activeCounter === 1 && state.today > 0) {
+    state.count--; state.today--; state.total--;
+  } else if(state.activeCounter === 2 && state.c2_today > 0) {
+    state.c2_count--; state.c2_today--; state.c2_total--;
+  }
+  updateUI(); drawMalaSvg(); saveState();
+}
+
+function updateUI() {
+  var isC1 = state.activeCounter === 1;
+  document.getElementById('ui-count').textContent = isC1 ? state.count : state.c2_count;
+  document.getElementById('ui-malas').textContent = isC1 ? Math.floor(state.count/108) : Math.floor(state.c2_count/108);
+  document.getElementById('ui-today').textContent = isC1 ? state.today : state.c2_today;
+  drawMalaSvg();
+}
+
+/* --- VISUAL EFFECTS --- */
+function generatePetals(count) {
+  var emojis = ['🌸','🌷','🌺','✿','🪷'];
+  for(var i=0; i<count; i++) {
+    var p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left = (Math.random()*100) + 'vw';
+    p.style.animationDuration = (8 + Math.random()*15) + 's';
+    p.style.animationDelay = (Math.random()*10) + 's';
+    p.style.fontSize = (0.5 + Math.random()*0.8) + 'rem';
+    document.body.appendChild(p);
+  }
+}
+
+document.getElementById('clickArea').addEventListener('click', function(e) {
+  incrementCount(false);
+  
+  // Ripple
+  var r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top = e.clientY + 'px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+
+  // Burst
+  var b = document.createElement('div');
+  b.className = 'burst-petal';
+  b.textContent = ['🌸','✨','💛','🌺'][Math.floor(Math.random()*4)];
+  b.style.left = (e.clientX - 10) + 'px';
+  b.style.top = (e.clientY - 10) + 'px';
+  document.body.appendChild(b);
+  setTimeout(() => b.remove(), 1000);
 });
 
-// RESIZE chart on rotation
-window.addEventListener('resize',function(){
-  if(document.getElementById('page-chart').classList.contains('active')) renderChart();
-});
+function createMegaBurst() {
+  for(var i=0; i<20; i++) {
+    setTimeout(function() {
+      var b = document.createElement('div');
+      b.className = 'burst-petal';
+      b.textContent = ['🌸','✨','💛','📿'][Math.floor(Math.random()*4)];
+      b.style.left = (20 + Math.random()*(window.innerWidth-40)) + 'px';
+      b.style.top = (window.innerHeight - 100) + 'px';
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 1000);
+    }, i*100);
+  }
+}
 
-load();
+function drawMalaSvg() {
+  var svg = document.getElementById('malaSvg');
+  var current = state.activeCounter === 1 ? state.count : state.c2_count;
+  var bead = current % 108;
+  
+  var html = '<circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,215,0,0.1)" stroke-width="6"/>';
+  var cx = 100, cy = 100, r = 90;
+  
+  for(var i=0; i<108; i++) {
+    var a = (i/108)*2*Math.PI - Math.PI/2;
+    var x = cx + r*Math.cos(a), y = cy + r*Math.sin(a);
+    var isActive = i < bead;
+    var isMarker = (i+1)%27 === 0;
+    
+    var fill = isActive ? (isMarker ? '#FFD700' : '#FF4D8D') : 'rgba(255,255,255,0.1)';
+    var s = isMarker ? 4 : 2;
+    if(isActive) s += 0.5;
+    
+    html += '<circle cx="'+x+'" cy="'+y+'" r="'+s+'" fill="'+fill+'" />';
+    if(isActive && isMarker) {
+      html += '<circle cx="'+x+'" cy="'+y+'" r="'+(s+3)+'" fill="none" class="glow-pulse" stroke="#FFD700" stroke-width="1" opacity="0.6"/>';
+    }
+  }
+  svg.innerHTML = html;
+}
+
+/* --- SMART VOICE RECOGNITION --- */
+var recognition = null;
+var voiceActive = false;
+var syllableBuffer = null;
+var bufferTimer = null;
+
+function toggleVoice() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) { toast('❌', 'Voice not supported on this browser (Try Chrome).'); return; }
+  
+  if(voiceActive) stopVoice();
+  else startVoice(SR);
+}
+
+function startVoice(SR) {
+  recognition = new SR();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'hi-IN'; // Works best for Hindi/Sanskrit
+  
+  recognition.onstart = function() {
+    voiceActive = true;
+    document.getElementById('vMic').classList.add('active');
+    document.getElementById('vStatBox').style.display = 'block';
+    toast('🎙️', 'Voice recognition active (Whisper mode)');
+  };
+  
+  recognition.onresult = function(event) {
+    if(!voiceActive) return;
+    var interimTrans = '';
+    
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+      var word = event.results[i][0].transcript.trim().toLowerCase();
+      interimTrans = word; // Show what it hears
+      document.getElementById('vTranscript').textContent = '"' + word + '"';
+      
+      // Full match check (Radha, Radhe)
+      if(word.match(/(radha|radhe|राधा|राधे|radey)/i)) {
+        incrementCount(true);
+        pulseVoiceUI('✅ Radha detected!');
+        syllableBuffer = null; // Clear buffer
+        continue;
+      }
+      
+      // Syllable Logic (Ra ... dha)
+      if(word.match(/^(ra|raa|रा|र)$/i)) {
+        syllableBuffer = 'ra';
+        pulseVoiceUI('Ra...');
+        clearTimeout(bufferTimer);
+        bufferTimer = setTimeout(()=> { syllableBuffer = null; }, 2500); // Wait 2.5s for 'dha'
+      }
+      else if(syllableBuffer === 'ra' && word.match(/^(dha|dhaa|da|धा|धे|दे|the)$/i)) {
+        incrementCount(true);
+        pulseVoiceUI('✅ (Ra+Dha) detected!');
+        syllableBuffer = null;
+        clearTimeout(bufferTimer);
+      }
+    }
+  };
+  
+  recognition.onerror = function(e) {
+    if(e.error==='not-allowed') { toast('🎙', 'Mic Blocked'); stopVoice(); }
+    else if(voiceActive) setTimeout(()=> { try{recognition.start()}catch(x){} }, 500);
+  };
+  
+  recognition.onend = function() {
+    if(voiceActive) setTimeout(()=> { try{recognition.start()}catch(x){} }, 200);
+  };
+  
+  try{ recognition.start(); } catch(e){}
+}
+
+function stopVoice() {
+  voiceActive = false;
+  document.getElementById('vMic').classList.remove('active');
+  document.getElementById('vStatBox').style.display = 'none';
+  if(recognition) recognition.stop();
+  toast('🛑', 'Voice disabled.');
+}
+
+function pulseVoiceUI(msg) {
+  var vp = document.getElementById('vPulse');
+  vp.textContent = msg;
+  vp.style.color = '#00e676';
+  setTimeout(()=> { vp.textContent = 'Listening for "Radha" or "राधे"'; vp.style.color = '#FF4D8D'; }, 1000);
+}
+
+/* --- UPDESH / PROGRESS / GOALS LOGIC --- */
+function initUpdesh() {
+  var c = document.getElementById('updesh-container');
+  var html = '';
+  UPDESH_DATA.forEach(d => {
+    html += '<div class="up-card">';
+    html += '<div class="up-cat">'+d.cat+'</div>';
+    html += '<div class="up-hindi">'+d.hi+'</div>';
+    html += '<div class="up-eng">"'+d.en+'"</div>';
+    html += '<div class="up-src">~ Rasik Vani</div>';
+    html += '</div>';
+  });
+  c.innerHTML = html;
+}
+
+function updateProgressUI() {
+  document.getElementById('ui-tot-c1').textContent = state.total;
+  document.getElementById('ui-tot-c2').textContent = state.c2_total;
+  document.getElementById('ui-tot-malas').textContent = Math.floor(state.total/108) + Math.floor(state.c2_total/108);
+  
+  // Heatmap
+  var grid = document.getElementById('hmGrid');
+  grid.innerHTML = '';
+  var today = new Date();
+  var maxVal = 100; // baseline
+  
+  // Calculate max val for scaling
+  var daysData = [];
+  for(var i=6; i>=0; i--) {
+    var d = new Date(today); d.setDate(d.getDate() - i);
+    var dStr = d.toDateString();
+    var val = (dStr === state.lastDate) ? state.today : (state.dailyLog[dStr] || 0);
+    daysData.push({l: ['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()], v: val});
+    if(val > maxVal) maxVal = val;
+  }
+  
+  daysData.forEach(day => {
+    var h = Math.max(5, (day.v / maxVal)*100);
+    var bg = day.v > 0 ? (day.v >= state.dailyGoal ? 'linear-gradient(0deg, #00e676, #69f0ae)' : 'linear-gradient(0deg, var(--rose), var(--saffron))') : 'rgba(255,255,255,0.1)';
+    
+    var bar = '<div class="hm-bar-wrap">';
+    if(day.v > 0) bar += '<div style="font-size:0.5rem; color:#fff; position:absolute; top:-12px;">'+day.v+'</div>';
+    bar += '<div class="hm-bar" style="height:'+h+'%; background:'+bg+'"></div>';
+    bar += '<div class="hm-day">'+day.l+'</div></div>';
+    grid.innerHTML += bar;
+  });
+
+  // Goals Info
+  document.getElementById('ui-streak').textContent = state.streak + ' 🔥';
+  document.getElementById('ui-goal-disp').textContent = state.dailyGoal > 0 ? state.dailyGoal : 'Not Set';
+  
+  document.querySelectorAll('.g-opt').forEach(el => {
+    el.classList.remove('active');
+    if(parseInt(el.textContent) === state.dailyGoal) el.classList.add('active');
+  });
+}
+
+function updateSessionTimer() {
+  if(!window.sessionStart) return;
+  var secList = Math.floor((Date.now() - window.sessionStart)/1000);
+  var m = Math.floor(secList / 60);
+  var s = secList % 60;
+  if(s < 10) s = '0'+s;
+  document.getElementById('ui-session').textContent = m + ':' + s;
+}
+
+function setGoal(val) {
+  var v = parseInt(val);
+  if(v > 0) {
+    state.dailyGoal = v;
+    saveState();
+    updateProgressUI();
+    toast('🎯', 'Daily Goal set to ' + v);
+  }
+}
+
+// Start
+init();
+
 </script>
 </body>
 </html>
