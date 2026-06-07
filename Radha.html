@@ -1,884 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#11001c">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>🌸 Radha Naam Jap - Divine</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0A0300">
+<title>राधा</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanabari:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold: #FFD700;
-  --saffron: #FF6B1A;
-  --rose: #FF4D8D;
-  --bg-deep: #0a0014;
-  --bg-mid: #1c0a2e;
-  --glass: rgba(255,255,255,0.05);
-  --glass-border: rgba(255,215,0,0.2);
-  --text-primary: #FFF8E7;
-  --text-dim: rgba(255,215,0,0.6);
-}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html, body { height:100%; overflow:hidden; font-family:'Crimson Pro', serif; background:var(--bg-deep); color:var(--text-primary); touch-action:manipulation; }
+html,body{width:100%;height:100%;overflow:hidden;
+background:radial-gradient(ellipse at 50% 40%,#1C0500 0%,#0A0300 75%);
+font-family:'Tiro Devanabari','Noto Sans Devanagari','Mangal',serif}
 
-/* Background Animations */
-.bg-mandala {
-  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:150vmax; height:150vmax; opacity:0.06; animation:spinBg 120s linear infinite; pointer-events:none; z-index:0;
-}
-@keyframes spinBg { to { transform:translate(-50%,-50%) rotate(360deg); } }
+/* ── SCREENS ── */
+.scr{position:fixed;inset:0;display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+opacity:0;pointer-events:none;transition:opacity 1.3s ease}
+.scr.on{opacity:1;pointer-events:all}
 
-.petal { position:fixed; pointer-events:none; z-index:1; animation:fallP linear infinite; opacity:0; }
-@keyframes fallP {
-  0% { transform:translateY(-10vh) rotate(0deg) scale(0.5); opacity:0; }
-  10% { opacity:0.6; transform:translateY(10vh) rotate(45deg) scale(1); }
-  90% { opacity:0.6; }
-  100% { transform:translateY(110vh) rotate(360deg) scale(0.8); opacity:0; }
-}
+/* ── START ── */
+#ss{gap:52px}
+#s-radhe{font-size:clamp(1.8rem,8vw,2.6rem);
+color:rgba(204,34,0,.5);letter-spacing:.28em;
+animation:breathe 5s ease-in-out infinite}
+.mrow{display:flex;gap:14px}
+.mb{padding:11px 22px;border:1px solid rgba(204,34,0,.22);
+border-radius:100px;background:transparent;
+color:rgba(255,110,60,.65);font-family:inherit;
+font-size:.92rem;cursor:pointer;
+transition:all .3s;touch-action:manipulation}
+.mb.sel{background:rgba(204,34,0,.16);
+border-color:rgba(204,34,0,.65);color:#FF7744}
+#s-hint{font-size:.75rem;color:rgba(204,34,0,.25);
+letter-spacing:.38em;animation:flicker 2.4s ease-in-out infinite}
 
-/* App Container */
-.app {
-  position:relative; z-index:10; height:100%; display:flex; flex-direction:column;
-  max-width:500px; margin:0 auto; background:linear-gradient(180deg, rgba(28,10,46,0) 0%, rgba(10,0,20,0.8) 100%);
-}
+/* ── JAP ── */
+#js{touch-action:none}
 
-/* Glass Tabs (Bottom) */
-.tab-bar {
-  display:flex; justify-content:space-around; align-items:center;
-  background:rgba(28,10,46,0.6); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  border-top:1px solid var(--glass-border); padding:10px 0 25px;
-  position:absolute; bottom:0; left:0; right:0; z-index:100;
-}
-.tab {
-  display:flex; flex-direction:column; align-items:center; opacity:0.5;
-  transition:all 0.3s; cursor:pointer; flex: 1; padding: 5px;
-}
-.tab.active { opacity:1; filter:drop-shadow(0 0 8px rgba(255,215,0,0.4)); transform:translateY(-3px); }
-.tab-icon { font-size:1.4rem; margin-bottom:4px; }
-.tab-label { font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; color:var(--gold); }
+#naam{font-size:clamp(100px,30vw,170px);line-height:1;
+display:flex;color:#BB1E00;
+filter:drop-shadow(0 0 22px rgba(187,30,0,.25));
+animation:breathe 5s ease-in-out infinite;
+transition:color .45s ease,filter .45s ease}
+#naam.flash{color:#FF5522;
+filter:drop-shadow(0 0 38px rgba(255,85,34,.55))}
+#naam.gold{color:#FFD000;
+filter:drop-shadow(0 0 44px rgba(255,210,0,.6))
+drop-shadow(0 0 88px rgba(255,180,0,.28))}
 
-/* Pages */
-.page {
-  display:none; flex:1; overflow-y:auto; overflow-x:hidden; padding:20px; padding-bottom:100px;
-  opacity:0; transition:opacity 0.3s;
-}
-.page.active { display:flex; flex-direction:column; opacity:1; }
-.page::-webkit-scrollbar { width:4px; }
-.page::-webkit-scrollbar-thumb { background:rgba(255,215,0,0.3); border-radius:4px; }
+.sy{display:inline-block;
+transition:transform 2.2s cubic-bezier(.2,1,.3,1),opacity 2.2s ease}
+#naam.drift .sy:first-child{transform:translateX(-26px);opacity:.3}
+#naam.drift .sy:last-child {transform:translateX(26px); opacity:.3}
+#naam.unite .sy{transform:translateX(0);opacity:1}
 
-/* Click Area Overlay (Jap Page Only) */
-.click-overlay {
-  position:absolute; inset:0; z-index:5; /* Below UI elements but above bg */
-  cursor:pointer; display:none;
-}
-.page-counter.active ~ .click-overlay { display:block; }
+/* count */
+#cnt{position:fixed;bottom:17%;width:100%;text-align:center;
+font-size:clamp(1.8rem,7vw,2.5rem);
+color:rgba(255,190,130,.78);letter-spacing:.07em;
+opacity:0;transition:opacity .38s ease;pointer-events:none}
+#cnt.on{opacity:1}
 
-/* Jap Counter Styles */
-.jap-header { text-align:center; position:relative; z-index:20; pointer-events:none; margin-bottom: 5px;}
-.om-glow {
-  font-size:2rem; background:linear-gradient(135deg, var(--saffron), var(--gold));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 15px rgba(255,180,50,0.8)); animation:breathe 4s infinite alternate;
-}
-@keyframes breathe { from{filter:drop-shadow(0 0 10px rgba(255,180,50,0.5));} to{filter:drop-shadow(0 0 25px rgba(255,180,50,1));} }
+#mline{position:fixed;bottom:11.5%;width:100%;text-align:center;
+font-size:.8rem;color:rgba(255,145,75,.35);letter-spacing:.22em;
+opacity:0;transition:opacity .38s ease;pointer-events:none}
+#mline.on{opacity:1}
 
-/* Counter Switcher */
-.counter-switch {
-  display:flex; background:rgba(0,0,0,0.5); border:1px solid var(--glass-border);
-  border-radius:30px; margin:0 auto 15px; width:fit-content; position:relative; z-index:20;
-  backdrop-filter:blur(8px);
-}
-.c-btn {
-  padding:8px 24px; font-size:0.8rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px;
-  cursor:pointer; transition:0.3s; position:relative; z-index:2; font-family:'Cinzel Decorative', serif;
-  font-weight: 700;
-}
-.c-btn.active { color:#fff; text-shadow:0 0 10px rgba(255,215,0,0.8); }
-.c-slider {
-  position:absolute; top:3px; bottom:3px; left:3px; width:calc(50% - 3px);
-  background:linear-gradient(135deg, rgba(255,107,26,0.6), rgba(255,77,141,0.6));
-  border-radius:25px; transition:0.3s; z-index:1; box-shadow: 0 0 15px rgba(255,107,26,0.4);
-}
-.counter-switch[data-active="2"] .c-slider { left:calc(50%); width:calc(50% - 3px);}
+/* voice dot */
+#vd{position:fixed;
+top:max(44px,env(safe-area-inset-top,44px));
+right:26px;width:7px;height:7px;border-radius:50%;
+background:rgba(204,34,0,.32);
+opacity:0;transition:opacity .5s}
+#vd.on{opacity:1;animation:vpulse 1.7s ease-in-out infinite}
+#vd.hit{background:#FF6633;animation:vhit .3s ease forwards}
+@keyframes vpulse{0%,100%{transform:scale(1);opacity:.38}
+50%{transform:scale(1.8);opacity:.88}}
+@keyframes vhit{0%{transform:scale(1)}50%{transform:scale(2.8)}100%{transform:scale(1)}}
 
-/* Top Stats & Voice Bar */
-.top-bar-jap {
-  display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; z-index:20; position:relative;
-}
-.voice-mic {
-  width:45px; height:45px; border-radius:50%; background:var(--glass); border:1px solid var(--glass-border);
-  display:flex; align-items:center; justify-content:center; font-size:1.3rem; cursor:pointer;
-  transition:all 0.3s; backdrop-filter:blur(5px);
-}
-.voice-mic.active {
-  background:rgba(255,77,141,0.2); border-color:var(--rose); color:#fff;
-  animation:micPulse 1.5s infinite;
-}
-@keyframes micPulse { 0%{box-shadow:0 0 0 0 rgba(255,77,141,0.4);} 70%{box-shadow:0 0 0 15px rgba(255,77,141,0);} 100%{box-shadow:0 0 0 0 rgba(255,77,141,0);} }
-.voice-status { font-size:0.7rem; color:var(--text-dim); text-align:right;}
-.voice-status div:first-child { color:var(--rose); font-weight:bold;}
+/* hold ring */
+#hr{position:fixed;bottom:3.5%;left:50%;
+transform:translateX(-50%);
+width:46px;height:46px;opacity:0;
+transition:opacity .28s;pointer-events:none}
+#hr svg{width:100%;height:100%}
+#hc{fill:none;stroke:rgba(204,34,0,.4);stroke-width:1.8;
+stroke-dasharray:127;stroke-dashoffset:127;
+transform-origin:center;transform:rotate(-90deg)}
 
-.mala-display {
-  flex:1; margin-right:15px; background:var(--glass); border:1px solid var(--glass-border);
-  border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:space-between;
-}
-.mala-text { font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
-.mala-val { font-family:'Cinzel Decorative', serif; font-size:1.2rem; color:var(--gold); }
+/* tap zone */
+#tz{position:fixed;inset:0;z-index:20;touch-action:none}
 
-/* Giant Counter Ring */
-.giant-counter {
-  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  position:relative; pointer-events:none; z-index:20;
-}
-.mala-svg { width:240px; height:240px; position:absolute; animation:spinBg 40s linear infinite; }
-.count-num {
-  font-family:'Cinzel Decorative', serif; font-size:5rem; line-height:1; font-weight:900;
-  background:linear-gradient(180deg, #fff, var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 20px rgba(255,215,0,0.6)); position:relative;
-  transition:transform 0.1s;
-}
-.count-num.bump { transform:scale(1.15); filter:drop-shadow(0 0 40px rgba(255,215,0,1)); }
-.count-label { font-size:1.1rem; color:var(--text-dim); font-family:'Kalam', cursive; letter-spacing:2px; margin-top:5px; text-shadow:0 0 10px var(--saffron);}
+/* ── SUMMARY ── */
+#sum{gap:20px;padding:40px 32px}
+#sum-r{font-size:1.35rem;color:rgba(204,34,0,.6);
+letter-spacing:.3em;margin-bottom:10px}
+#sum-n{font-size:clamp(3rem,14vw,5rem);color:#BB1E00}
+.ss{font-size:.88rem;color:rgba(255,150,80,.5);letter-spacing:.18em}
+#sum-m{margin-top:30px;font-size:.86rem;
+color:rgba(255,185,120,.42);text-align:center;
+line-height:2.2;letter-spacing:.1em;
+opacity:0;transition:opacity 2.2s ease}
+#sum-m.on{opacity:1}
+#sum-d{margin-top:38px;padding:13px 38px;
+border:1px solid rgba(204,34,0,.25);border-radius:100px;
+background:transparent;color:rgba(255,110,60,.65);
+font-family:inherit;font-size:.93rem;cursor:pointer;
+opacity:0;transition:opacity 1.1s ease}
+#sum-d.on{opacity:1}
 
-.click-hint {
-  position:absolute; bottom:120px; width:100%; text-align:center; font-style:italic;
-  color:rgba(255,255,255,0.3); font-size:0.8rem; pointer-events:none; z-index:20;
-  animation:fadeInOut 3s infinite;
-}
-@keyframes fadeInOut{ 0%,100%{opacity:0.2} 50%{opacity:0.8} }
+/* ── LIFETIME ── */
+#lt{position:fixed;inset:0;
+background:rgba(10,3,0,.97);
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;gap:14px;
+opacity:0;pointer-events:none;transition:opacity .58s ease;z-index:50}
+#lt.on{opacity:1;pointer-events:all}
+#lt-lb{font-size:.76rem;color:rgba(255,145,80,.42);letter-spacing:.32em}
+#lt-n{font-size:clamp(3rem,13vw,4.8rem);color:#BB1E00}
+#lt-m{font-size:1.05rem;color:rgba(255,145,80,.42)}
+#lt-h{margin-top:38px;font-size:.68rem;
+color:rgba(204,34,0,.22);letter-spacing:.32em}
 
-/* Burst & Ripple */
-.burst-petal { position:fixed; z-index:50; pointer-events:none; font-size:1.5rem; animation:burstUp 1s ease-out forwards; }
-@keyframes burstUp { 0%{opacity:1; transform:translateY(0) scale(0.5) rotate(0deg);} 100%{opacity:0; transform:translateY(-100px) scale(1.2) rotate(180deg);} }
-.ripple {
-  position:absolute; border-radius:50%; background:radial-gradient(circle, rgba(255,215,0,0.6) 0%, transparent 70%);
-  transform:translate(-50%,-50%) scale(0); animation:rip 0.6s ease-out forwards; pointer-events:none; z-index:4;
-}
-@keyframes rip { to {transform:translate(-50%,-50%) scale(2); opacity:0;} }
+/* ── PARTICLES ── */
+.pt{position:fixed;border-radius:50%;
+background:rgba(187,30,0,.1);pointer-events:none;
+animation:rise linear infinite}
+@keyframes rise{
+0%{transform:translateY(102vh) translateX(0);opacity:0}
+8%{opacity:1}92%{opacity:1}
+100%{transform:translateY(-6vh) translateX(12px);opacity:0}}
 
-/* Updesh Tab */
-.updesh-page { gap:20px; }
-.up-title { font-family:'Cinzel Decorative', serif; font-size:1.5rem; color:var(--gold); text-align:center; }
-.up-card {
-  background:rgba(255,255,255,0.03); border:1px solid rgba(255,107,26,0.3);
-  border-radius:16px; padding:20px; position:relative; overflow:hidden;
-  box-shadow:inset 0 0 20px rgba(255,77,141,0.05); margin-bottom: 20px;
-}
-.up-card::before {
-  content:''; position:absolute; inset:0; background:radial-gradient(circle at top right, rgba(255,107,26,0.1), transparent 70%); pointer-events:none;
-}
-.up-cat { font-size:0.7rem; color:var(--rose); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; }
-.up-hindi { font-family:'Kalam', cursive; font-size:1.3rem; color:#fff; line-height:1.6; margin-bottom:15px; text-shadow:0 2px 4px rgba(0,0,0,0.5); }
-.up-eng { font-style:italic; color:var(--text-dim); font-size:0.9rem; line-height:1.5; margin-bottom:15px; }
-.up-src { text-align:right; font-size:0.75rem; color:var(--gold); letter-spacing:1px; opacity:0.8; }
-
-/* Progress Tab */
-.prog-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px; }
-.p-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:15px; text-align:center;}
-.p-val { font-family:'Cinzel Decorative', serif; font-size:1.5rem; color:var(--gold); margin:5px 0; }
-.p-lbl { font-size:0.7rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
-
-.heatmap { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:15px; margin-top:15px; }
-.hm-title { font-size:0.8rem; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; text-align:center;}
-.hm-grid { display:flex; justify-content:space-between; gap:5px; align-items:flex-end; height:100px; padding-bottom:20px; position:relative; border-bottom:1px solid rgba(255,255,255,0.1); }
-.hm-bar-wrap { flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; height:100%; position:relative; }
-.hm-bar { width:10px; background:var(--glass); border-radius:5px 5px 0 0; transition:height 0.5s, background 0.5s; }
-.hm-day { position:absolute; bottom:-18px; font-size:0.6rem; color:var(--text-dim); }
-
-/* Goals Tab */
-.gs-card { background:rgba(255,107,26,0.05); border:1px solid rgba(255,107,26,0.3); border-radius:16px; padding:20px; text-align:center; margin-bottom:15px;}
-.gs-streak { font-family:'Cinzel Decorative', serif; font-size:2.5rem; color:var(--saffron); filter:drop-shadow(0 0 10px rgba(255,107,26,0.5)); margin:10px 0;}
-.goal-opts { display:flex; gap:10px; flex-wrap:wrap; margin-top:15px; justify-content:center;}
-.g-opt { padding:8px 16px; background:var(--glass); border:1px solid var(--glass-border); border-radius:20px; color:var(--text-dim); cursor:pointer; font-family:'Cinzel Decorative', serif; transition:all 0.2s;}
-.g-opt.active { background:rgba(255,215,0,0.15); color:var(--gold); border-color:var(--gold); box-shadow:inset 0 0 10px rgba(255,215,0,0.2);}
-input.g-opt { max-width:80px; text-align:center; font-family:'Crimson Pro', serif; outline:none; color:#fff; }
-
-.btn { display:inline-block; padding:10px 20px; background:linear-gradient(135deg, var(--saffron), var(--rose)); border:none; border-radius:20px; color:#fff; font-family:'Cinzel Decorative', serif; font-size:0.9rem; cursor:pointer; box-shadow:0 4px 15px rgba(255,107,26,0.3); transition:all 0.2s; text-decoration:none; text-align:center;}
-.btn:active { transform:scale(0.95); }
-
-/* Prarthana Tab */
-.prayer { text-align:center; margin-bottom:25px; }
-.pr-hin { font-family:'Kalam', cursive; font-size:1.4rem; color:var(--gold); margin-bottom:10px; text-shadow:0 0 10px rgba(255,215,0,0.2); line-height: 1.4;}
-.pr-eng { font-style:italic; font-size:0.9rem; color:rgba(255,255,255,0.7); line-height: 1.5; }
-.divider { color:var(--rose); opacity:0.5; text-align:center; letter-spacing:10px; font-size:1.2rem; margin:15px 0;}
-
-/* Toast */
-.toast {
-  position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-20px); opacity:0; pointer-events:none;
-  background:rgba(28,10,46,0.95); border:1px solid var(--gold); border-radius:20px; padding:10px 20px;
-  display:flex; align-items:center; gap:10px; box-shadow:0 0 20px rgba(255,215,0,0.2); z-index:1000; transition:all 0.3s;
-}
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-.t-icn { font-size:1.5rem; }
-.t-msg { font-size:0.9rem; color:var(--gold); }
-
-/* Misc Controls */
-.controls-bottom { display:flex; justify-content:center; gap:15px; margin-top:20px; z-index:20; position:relative; pointer-events:auto;}
-.c-btn-small { background:var(--glass); border:1px solid rgba(255,255,255,0.1); padding:5px 15px; border-radius:15px; color:rgba(255,255,255,0.5); font-size:0.7rem; cursor:pointer; }
-.c-btn-small:hover { color:#fff; border-color:var(--text-dim); }
-
+/* ── SHARED ANIMS ── */
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@keyframes flicker{0%,100%{opacity:.25}50%{opacity:.62}}
 </style>
 </head>
 <body>
 
-<!-- Animated Background -->
-<svg class="bg-mandala" viewBox="0 0 800 800" fill="none">
-  <circle cx="400" cy="400" r="390" stroke="#FFD700" stroke-width="0.5"/>
-  <circle cx="400" cy="400" r="340" stroke="#FF6B1A" stroke-width="0.3"/>
-  <circle cx="400" cy="400" r="280" stroke="#FF4D8D" stroke-width="0.4"/>
-  <circle cx="400" cy="400" r="220" stroke="#FFD700" stroke-width="0.2"/>
-  <circle cx="400" cy="400" r="160" stroke="#FF6B1A" stroke-width="0.5"/>
-  <g stroke="#FFD700" stroke-width="0.3" opacity="0.6">
-    <line x1="400" y1="10" x2="400" y2="790"/><line x1="10" y1="400" x2="790" y2="400"/>
-    <line x1="124" y1="124" x2="676" y2="676"/><line x1="676" y1="124" x2="124" y2="676"/>
-  </g>
-  <g fill="none" stroke="#FF4D8D" stroke-width="0.5" opacity="0.4">
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(0 400 400)"/>
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(45 400 400)"/>
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(90 400 400)"/>
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(135 400 400)"/>
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(180 400 400)"/>
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(225 400 400)"/>
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(270 400 400)"/>
-    <ellipse cx="400" cy="220" rx="40" ry="100" transform="rotate(315 400 400)"/>
-  </g>
-</svg>
+<div id="pts"></div>
 
-<div class="app">
-
-  <!-- 📿 JAP PAGE (Default) -->
-  <div class="page page-counter active" id="pg-jap">
-    
-    <div class="jap-header">
-      <div class="om-glow">ॐ</div>
-    </div>
-
-    <!-- Dual Counter Switcher -->
-    <div class="counter-switch" id="cSwitch" data-active="1">
-      <div class="c-slider"></div>
-      <div class="c-btn active" onclick="switchCounter(1)">Radha Naam</div>
-      <div class="c-btn" onclick="switchCounter(2)">Yugal Mantra</div>
-    </div>
-
-    <!-- Top Stats / Voice -->
-    <div class="top-bar-jap">
-      <div class="mala-display">
-        <div>
-          <div class="mala-val" id="ui-malas">0</div>
-          <div class="mala-text">Malas Complete</div>
-        </div>
-        <div style="text-align:right">
-          <div class="mala-val" id="ui-today" style="font-size:1rem;">0</div>
-          <div class="mala-text">Today's Total</div>
-        </div>
-      </div>
-      
-      <div class="voice-mic" id="vMic" onclick="toggleVoice()">
-        🎙️
-      </div>
-    </div>
-    
-    <div class="voice-status" id="vStatBox" style="display:none; text-align:right; border-top:1px solid rgba(255,255,255,0.1); padding-top:5px;">
-      <div id="vPulse">Listening for "Radha" or "राधे"</div>
-      <div id="vTranscript" style="font-style:italic">...</div>
-    </div>
-
-    <!-- Giant Central Counter -->
-    <div class="giant-counter">
-      <svg class="mala-svg" viewBox="0 0 200 200" id="malaSvg">
-        <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,215,0,0.1)" stroke-width="8"/>
-      </svg>
-      <div class="count-num" id="ui-count">0</div>
-      <div class="count-label" id="ui-label">राधे राधे</div>
-    </div>
-
-    <div class="click-hint">Tap anywhere to chant</div>
-
-    <div class="controls-bottom">
-      <button class="c-btn-small" onclick="undo()">↩ Undo Last</button>
-    </div>
+<!-- START -->
+<div class="scr on" id="ss">
+  <div id="s-radhe">राधे राधे</div>
+  <div class="mrow">
+    <button class="mb sel" id="mb-tap"   onclick="setMode('tap')">👆 जप</button>
+    <button class="mb"     id="mb-voice" onclick="setMode('voice')">🎙️ वाणी</button>
+    <button class="mb"     id="mb-both"  onclick="setMode('both')">दोनों</button>
   </div>
-
-  <!-- Fullscreen Click Overlay (injects ripples & increments) -->
-  <div class="click-overlay" id="clickArea"></div>
-
-  <!-- 📖 UPDESH PAGE -->
-  <div class="page updesh-page" id="pg-updesh">
-    <div class="up-title">Rasik Updesh</div>
-    <div class="divider">🌸 🌷 🌸</div>
-    
-    <div id="updesh-container">
-      <!-- Generated via JS -->
-    </div>
-  </div>
-
-  <!-- 📊 PROGRESS PAGE -->
-  <div class="page" id="pg-prog">
-    <div class="up-title">Spiritual Journey</div>
-    <div class="divider">✨ ॐ ✨</div>
-
-    <div class="prog-grid">
-      <div class="p-card">
-        <div class="p-lbl">Total Naam</div>
-        <div class="p-val" id="ui-tot-c1">0</div>
-        <div class="p-lbl" style="color:rgba(255,255,255,0.4)">Counter 1</div>
-      </div>
-      <div class="p-card">
-        <div class="p-lbl">Total Naam</div>
-        <div class="p-val" id="ui-tot-c2">0</div>
-        <div class="p-lbl" style="color:rgba(255,255,255,0.4)">Counter 2</div>
-      </div>
-      <div class="p-card">
-        <div class="p-lbl">All Malas</div>
-        <div class="p-val" id="ui-tot-malas">0</div>
-      </div>
-      <div class="p-card">
-        <div class="p-lbl">Session Timer</div>
-        <div class="p-val" id="ui-session">0:00</div>
-      </div>
-    </div>
-
-    <!-- 7 Day Heatmap -->
-    <div class="heatmap">
-      <div class="hm-title">7-Day Devotion (C1)</div>
-      <div class="hm-grid" id="hmGrid">
-        <!-- Generated -->
-      </div>
-    </div>
-  </div>
-
-  <!-- 🎯 GOALS PAGE -->
-  <div class="page" id="pg-goals">
-    <div class="up-title">Sadhana Goals</div>
-    <div class="divider">🔥 🌺 🔥</div>
-
-    <div class="gs-card">
-      <div class="p-lbl">Current Streak</div>
-      <div class="gs-streak" id="ui-streak">0</div>
-      <div style="font-style:italic; font-size:0.8rem; color:rgba(255,255,255,0.6)">Keep chanting every day to maintain the fire!</div>
-    </div>
-
-    <div class="gs-card">
-      <div class="p-lbl">Daily Target (Counter 1)</div>
-      <div class="p-val" id="ui-goal-disp" style="margin-top:10px;">Not Set</div>
-      <div class="goal-opts">
-        <div class="g-opt" onclick="setGoal(108)">108</div>
-        <div class="g-opt" onclick="setGoal(1008)">1008</div>
-        <input type="number" class="g-opt" id="gCustom" placeholder="Custom" onchange="setGoal(this.value)">
-      </div>
-      <div style="margin-top:10px; font-size:0.75rem; color:var(--text-dim)">
-        If you miss a day, the remaining amount is added to tomorrow's goal as penance.
-      </div>
-    </div>
-  </div>
-
-  <!-- 🙏 PRARTHANA PAGE -->
-  <div class="page" id="pg-pray">
-    <div class="up-title">Radha Prarthana</div>
-    <div class="divider">🌸 🌷 🌸</div>
-
-    <div class="prayer">
-      <div class="pr-hin">हे राधे! तुम्हारे बिना मेरा<br>यह जीवन अधूरा है।<br>तुम्हारा नाम ही मेरी<br>सांस है, मेरा जीवन है।</div>
-      <div class="pr-eng">O Radhe! Without You, my life is incomplete.<br>Your Name is my every breath, my very life.</div>
-    </div>
-    <div class="divider">✨</div>
-    <div class="prayer">
-      <div class="pr-hin">राधे राधे जपत रहो,<br>राधे नाम की माला।<br>राधे बिन सब सूना है,<br>राधे सबसे निराला।।</div>
-      <div class="pr-eng">Keep chanting Radhe Radhe,<br>the garland of Radha's Name.<br>Without Radhe all is empty.</div>
-    </div>
-    
-    <div style="text-align:center; margin-top:30px;">
-      <div class="btn" onclick="switchMainTab('jap')">Begin Naam Jap Now</div>
-    </div>
-  </div>
-
-  <!-- Tab Bar -->
-  <div class="tab-bar">
-    <div class="tab active" data-target="jap" onclick="switchMainTab('jap')">
-      <span class="tab-icon">📿</span>
-      <span class="tab-label">Jap</span>
-    </div>
-    <div class="tab" data-target="updesh" onclick="switchMainTab('updesh')">
-      <span class="tab-icon">📖</span>
-      <span class="tab-label">Updesh</span>
-    </div>
-    <div class="tab" data-target="prog" onclick="switchMainTab('prog')">
-      <span class="tab-icon">📊</span>
-      <span class="tab-label">Progress</span>
-    </div>
-    <div class="tab" data-target="goals" onclick="switchMainTab('goals')">
-      <span class="tab-icon">🎯</span>
-      <span class="tab-label">Goals</span>
-    </div>
-    <div class="tab" data-target="pray" onclick="switchMainTab('pray')">
-      <span class="tab-icon">🙏</span>
-      <span class="tab-label">Prayer</span>
-    </div>
-  </div>
-
+  <div id="s-hint">— स्पर्श करें —</div>
 </div>
 
-<!-- Global Toast -->
-<div class="toast" id="glbToast">
-  <div class="t-icn" id="glbIcn">🌸</div>
-  <div class="t-msg" id="glbMsg">Message</div>
+<!-- JAP -->
+<div class="scr" id="js">
+  <div id="naam" class="unite">
+    <span class="sy">रा</span><span class="sy">धा</span>
+  </div>
+  <div id="cnt">0</div>
+  <div id="mline">माला: 0</div>
+  <div id="vd"></div>
+  <div id="hr"><svg viewBox="0 0 46 46"><circle id="hc" cx="23" cy="23" r="20.2"/></svg></div>
+  <div id="tz"></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="scr" id="sum">
+  <div id="sum-r">राधे राधे</div>
+  <div id="sum-n">0</div>
+  <div class="ss" id="sum-ml">माला: 0</div>
+  <div class="ss" id="sum-t">0 मिनट</div>
+  <div id="sum-m">राधे राधे — सँभाल लिया&nbsp;🌸</div>
+  <button id="sum-d" onclick="goStart()">🙏&nbsp;राधे राधे</button>
+</div>
+
+<!-- LIFETIME -->
+<div id="lt">
+  <div id="lt-lb">कुल राधा नाम</div>
+  <div id="lt-n">0</div>
+  <div id="lt-m">0 माला</div>
+  <div id="lt-h">↓ स्पर्श करें</div>
 </div>
 
 <script>
-/* --- DATA MODELS & STATE --- */
-// Backward compatible state object
-var state = {
-  // Global
-  activeCounter: 1,
-  lastDate: new Date().toDateString(),
-  streak: 0,
-  dailyGoal: 0,
-  penalty: 0,
-  // Counter 1 (Original)
-  count: 0, malas: 0, today: 0, total: 0,
-  dailyLog: {}, // {date: count}
-  // Counter 2 (New)
-  c2_count: 0, c2_malas: 0, c2_today: 0, c2_total: 0,
-  c2_dailyLog: {}
+/* ══ STATE ══ */
+const S={mode:'tap',count:0,malas:0,t0:0,lastTap:0,
+cTimer:null,idleTimer:null,raf:null,hs:0,
+drifting:false,active:false,recog:null,
+wl:null,swy:0,ctx:null};
+
+/* ══ DB ══ */
+const DB={
+  get(){try{return JSON.parse(localStorage.getItem('r8')||'{}')}catch{return{}}},
+  add(c,m){const d=this.get();
+    d.life=(d.life||0)+c;d.malas=(d.malas||0)+m;
+    if(!d.s)d.s=[];
+    d.s.push({ts:Date.now(),c,m,mode:S.mode});
+    localStorage.setItem('r8',JSON.stringify(d))}
 };
 
-// Rasik Updesh Content (To increase love for Radha Rani)
-var UPDESH_DATA = [
-  {
-    cat: "श्री हित हरिवंश (Shri Hit Harivansh)",
-    hi: "राधा नाम परम सुखदाई, भजत मिटत सब पाप।",
-    en: "The name of Radha gives supreme joy; by chanting it, all sins are erased."
-  },
-  {
-    cat: "प्रेम भक्ति (Prem Bhakti)",
-    hi: "जहाँ राधा का नाम है, वहाँ वृंदावन है।",
-    en: "Wherever the name of Radha is sung, that place becomes Vrindavan."
-  },
-  {
-    cat: "स्वामी हरिदास (Swami Haridas)",
-    hi: "राधे राधे रटत ही, भव सागर तरि जाय।",
-    en: "Only by constantly chanting 'Radhe Radhe', one crosses the ocean of material existence."
-  },
-  {
-    cat: "राधा तत्व (Radha Tattva)",
-    hi: "कृष्ण की आत्मा राधा हैं, और राधा का प्राण कृष्ण।",
-    en: "Radha is the soul of Krishna, and Krishna is the life-breath of Radha."
-  },
-  {
-    cat: "विरह भाव (Viraha Bhav)",
-    hi: "हे राधिके! तेरे दरस बिनु, नैन जल भरि आय।",
-    en: "O Radhika! Without Your divine sight, my eyes are constantly filled with tears."
-  }
-];
-
-/* --- INITIALIZATION --- */
-function init() {
-  loadState();
-  initUpdesh();
-  generatePetals(15);
-  setInterval(updateSessionTimer, 1000);
-  window.sessionStart = Date.now();
+/* ══ SCREENS ══ */
+function show(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  requestAnimationFrame(()=>document.getElementById(id).classList.add('on'));
 }
 
-function saveState() {
-  localStorage.setItem('radhaJapV4', JSON.stringify(state));
+/* ══ MODE ══ */
+function setMode(m){
+  S.mode=m;
+  ['tap','voice','both'].forEach(x=>
+    document.getElementById('mb-'+x).classList.toggle('sel',x===m));
 }
 
-function loadState() {
-  try {
-    var v4 = localStorage.getItem('radhaJapV4');
-    var v3 = localStorage.getItem('radhaJapV3'); // Legacy migration
-    
-    if (v4) {
-      Object.assign(state, JSON.parse(v4));
-    } else if (v3) {
-      Object.assign(state, JSON.parse(v3));
-      // Initialize C2 fields if missing
-      state.c2_count = 0; state.c2_malas = 0; state.c2_today = 0; state.c2_total = 0; state.c2_dailyLog = {};
-    }
-  } catch(e) {}
-
-  var today = new Date().toDateString();
-  if(state.lastDate !== today) {
-    handleNewDay(today);
-  }
-
-  // Ensure default structure
-  if(!state.c2_dailyLog) state.c2_dailyLog = {};
-
-  updateUI();
-  updateProgressUI();
-  switchCounter(state.activeCounter || 1);
-}
-
-function handleNewDay(todayStr) {
-  // Goal Penalty Check for C1
-  if(state.dailyGoal > 0) {
-    var done = state.today; 
-    var target = state.dailyGoal + state.penalty;
-    if(done < target) {
-      state.penalty = (target - done);
-      state.streak = 0; // Broken streak
-    } else {
-      state.penalty = 0;
-      state.streak++;
-    }
-  }
-  
-  // Save log
-  state.dailyLog[state.lastDate] = state.today;
-  state.c2_dailyLog[state.lastDate] = state.c2_today;
-  
-  // Reset daily stats
-  state.today = 0; state.count = 0; // retain malas or reset? Usually count resets daily
-  state.c2_today = 0; state.c2_count = 0;
-  state.lastDate = todayStr;
-  saveState();
-
-  if(state.penalty > 0) {
-    setTimeout(()=>toast('⚠️', 'Sadhana Penalty: +'+state.penalty+' naam added today.'), 1000);
-  }
-}
-
-/* --- UI NOTIFICATIONS --- */
-var tTimer;
-function toast(icon, msg) {
-  var t = document.getElementById('glbToast');
-  document.getElementById('glbIcn').textContent = icon;
-  document.getElementById('glbMsg').textContent = msg;
-  t.classList.add('show');
-  clearTimeout(tTimer);
-  tTimer = setTimeout(()=> t.classList.remove('show'), 3000);
-}
-
-/* --- TABS & COUNTERS --- */
-function switchMainTab(tabId) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.tab[data-target="'+tabId+'"]').classList.add('active');
-  
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('pg-'+tabId).classList.add('active');
-
-  if(tabId === 'prog') updateProgressUI();
-}
-
-function switchCounter(cNum) {
-  state.activeCounter = cNum;
-  var sw = document.getElementById('cSwitch');
-  sw.setAttribute('data-active', cNum);
-  sw.children[1].classList.toggle('active', cNum === 1);
-  sw.children[2].classList.toggle('active', cNum === 2);
-  
-  var lbl = cNum === 1 ? 'राधे राधे' : 'श्री युगल मंत्र';
-  document.getElementById('ui-label').textContent = lbl;
-
-  updateUI();
-  saveState();
-}
-
-/* --- COUNTING LOGIC --- */
-function incrementCount(fromVoice = false) {
-  var isC1 = state.activeCounter === 1;
-  
-  if (isC1) {
-    state.count++; state.today++; state.total++;
-    state.malas = Math.floor(state.total / 108); // total malas across lifetime
-  } else {
-    state.c2_count++; state.c2_today++; state.c2_total++;
-    state.c2_malas = Math.floor(state.c2_total / 108);
-  }
-
-  // Visuals
-  var cntDiv = document.getElementById('ui-count');
-  cntDiv.classList.remove('bump');
-  void cntDiv.offsetWidth; // trigger reflow
-  cntDiv.classList.add('bump');
-  
-  updateUI();
-  drawMalaSvg();
-  saveState();
-
-  // Milestone triggers
-  var currentCount = isC1 ? state.count : state.c2_count;
-  if (currentCount % 108 === 0) {
-    toast('📿', '1 Mala Complete! Jai Shri Radhe!');
-    createMegaBurst();
-  } else if (currentCount % 54 === 0) {
-    toast('🌸', 'Half mala done. Beautiful!');
-  }
-
-  // Goal check (C1 only for daily goals)
-  if(isC1 && state.dailyGoal > 0) {
-    var target = state.dailyGoal + state.penalty;
-    if(state.today === target) {
-      toast('🎯', 'Daily Goal Achieved! Radha Rani is pleased.');
-      state.penalty = 0; saveState();
-      createMegaBurst();
-    }
-  }
-}
-
-function undo() {
-  if(state.activeCounter === 1 && state.today > 0) {
-    state.count--; state.today--; state.total--;
-  } else if(state.activeCounter === 2 && state.c2_today > 0) {
-    state.c2_count--; state.c2_today--; state.c2_total--;
-  }
-  updateUI(); drawMalaSvg(); saveState();
-}
-
-function updateUI() {
-  var isC1 = state.activeCounter === 1;
-  document.getElementById('ui-count').textContent = isC1 ? state.count : state.c2_count;
-  document.getElementById('ui-malas').textContent = isC1 ? Math.floor(state.count/108) : Math.floor(state.c2_count/108);
-  document.getElementById('ui-today').textContent = isC1 ? state.today : state.c2_today;
-  drawMalaSvg();
-}
-
-/* --- VISUAL EFFECTS --- */
-function generatePetals(count) {
-  var emojis = ['🌸','🌷','🌺','✿','🪷'];
-  for(var i=0; i<count; i++) {
-    var p = document.createElement('div');
-    p.className = 'petal';
-    p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-    p.style.left = (Math.random()*100) + 'vw';
-    p.style.animationDuration = (8 + Math.random()*15) + 's';
-    p.style.animationDelay = (Math.random()*10) + 's';
-    p.style.fontSize = (0.5 + Math.random()*0.8) + 'rem';
-    document.body.appendChild(p);
-  }
-}
-
-document.getElementById('clickArea').addEventListener('click', function(e) {
-  incrementCount(false);
-  
-  // Ripple
-  var r = document.createElement('div');
-  r.className = 'ripple';
-  r.style.left = e.clientX + 'px';
-  r.style.top = e.clientY + 'px';
-  document.body.appendChild(r);
-  setTimeout(() => r.remove(), 600);
-
-  // Burst
-  var b = document.createElement('div');
-  b.className = 'burst-petal';
-  b.textContent = ['🌸','✨','💛','🌺'][Math.floor(Math.random()*4)];
-  b.style.left = (e.clientX - 10) + 'px';
-  b.style.top = (e.clientY - 10) + 'px';
-  document.body.appendChild(b);
-  setTimeout(() => b.remove(), 1000);
+/* ══ START ══ */
+document.getElementById('ss').addEventListener('click',e=>{
+  if(e.target.closest('.mb'))return;
+  begin();
 });
 
-function createMegaBurst() {
-  for(var i=0; i<20; i++) {
-    setTimeout(function() {
-      var b = document.createElement('div');
-      b.className = 'burst-petal';
-      b.textContent = ['🌸','✨','💛','📿'][Math.floor(Math.random()*4)];
-      b.style.left = (20 + Math.random()*(window.innerWidth-40)) + 'px';
-      b.style.top = (window.innerHeight - 100) + 'px';
-      document.body.appendChild(b);
-      setTimeout(() => b.remove(), 1000);
-    }, i*100);
-  }
+function begin(){
+  S.count=0;S.malas=0;S.t0=Date.now();S.active=true;S.drifting=false;
+  upd();show('js');
+  pts();wl();
+  if(S.mode!=='tap')voice();
+  idleReset();
 }
 
-function drawMalaSvg() {
-  var svg = document.getElementById('malaSvg');
-  var current = state.activeCounter === 1 ? state.count : state.c2_count;
-  var bead = current % 108;
-  
-  var html = '<circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,215,0,0.1)" stroke-width="6"/>';
-  var cx = 100, cy = 100, r = 90;
-  
-  for(var i=0; i<108; i++) {
-    var a = (i/108)*2*Math.PI - Math.PI/2;
-    var x = cx + r*Math.cos(a), y = cy + r*Math.sin(a);
-    var isActive = i < bead;
-    var isMarker = (i+1)%27 === 0;
-    
-    var fill = isActive ? (isMarker ? '#FFD700' : '#FF4D8D') : 'rgba(255,255,255,0.1)';
-    var s = isMarker ? 4 : 2;
-    if(isActive) s += 0.5;
-    
-    html += '<circle cx="'+x+'" cy="'+y+'" r="'+s+'" fill="'+fill+'" />';
-    if(isActive && isMarker) {
-      html += '<circle cx="'+x+'" cy="'+y+'" r="'+(s+3)+'" fill="none" class="glow-pulse" stroke="#FFD700" stroke-width="1" opacity="0.6"/>';
+/* ══ ADD COUNT ══ */
+function add(){
+  if(!S.active)return;
+  const n=Date.now();
+  if(n-S.lastTap<85)return;
+  S.lastTap=n;
+  S.count++;
+  if(navigator.vibrate)navigator.vibrate(22);
+  flash();
+  if(S.count%108===0){S.malas++;mala();}
+  if(S.drifting)unite();
+  upd();showC();idleReset();
+}
+
+function upd(){
+  document.getElementById('cnt').textContent=S.count.toLocaleString();
+  document.getElementById('mline').textContent='माला: '+S.malas;
+}
+
+function showC(){
+  clearTimeout(S.cTimer);
+  document.getElementById('cnt').classList.add('on');
+  document.getElementById('mline').classList.add('on');
+  S.cTimer=setTimeout(()=>{
+    document.getElementById('cnt').classList.remove('on');
+    document.getElementById('mline').classList.remove('on');
+  },2300);
+}
+
+/* ══ NAAM ANIMS ══ */
+function flash(){
+  const n=document.getElementById('naam');
+  n.classList.remove('flash');void n.offsetWidth;
+  n.classList.add('flash');
+  setTimeout(()=>n.classList.remove('flash'),290);
+}
+
+function mala(){
+  const n=document.getElementById('naam');
+  n.classList.add('gold');bell();
+  setTimeout(()=>n.classList.remove('gold'),4400);
+}
+
+function drift(){
+  S.drifting=true;
+  const n=document.getElementById('naam');
+  n.classList.remove('unite');n.classList.add('drift');
+}
+
+function unite(){
+  S.drifting=false;
+  const n=document.getElementById('naam');
+  n.classList.remove('drift');n.classList.add('unite');
+}
+
+function idleReset(){
+  clearTimeout(S.idleTimer);
+  S.idleTimer=setTimeout(drift,38000);
+}
+
+/* ══ TOUCH ══ */
+const tz=document.getElementById('tz');
+
+tz.addEventListener('touchstart',e=>{
+  e.preventDefault();
+  S.swy=e.touches[0].clientY;
+  S.hs=Date.now();
+  startHold();
+},{passive:false});
+
+tz.addEventListener('touchend',e=>{
+  e.preventDefault();
+  const dy=S.swy-e.changedTouches[0].clientY;
+  stopHold();
+  if(dy>55){showLT();return;}
+  if(Date.now()-S.hs<2800)add();
+},{passive:false});
+
+tz.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+tz.addEventListener('mousedown',()=>{S.hs=Date.now();startHold();});
+tz.addEventListener('mouseup',()=>{stopHold();if(Date.now()-S.hs<2800)add();});
+
+/* ══ HOLD RING ══ */
+const C=127;
+const hc=document.getElementById('hc');
+const hr=document.getElementById('hr');
+
+function startHold(){
+  hr.style.opacity='1';
+  const s=Date.now();
+  function step(){
+    const p=Math.min((Date.now()-s)/3000,1);
+    hc.style.strokeDashoffset=C*(1-p);
+    if(p<1)S.raf=requestAnimationFrame(step);
+    else end();
+  }
+  S.raf=requestAnimationFrame(step);
+}
+
+function stopHold(){
+  if(S.raf){cancelAnimationFrame(S.raf);S.raf=null;}
+  hr.style.opacity='0';
+  hc.style.strokeDashoffset=C;
+}
+
+/* ══ END SESSION ══ */
+function end(){
+  S.active=false;
+  if(S.recog){try{S.recog.stop();}catch(e){}}
+  if(S.wl){try{S.wl.release();}catch(e){}}
+  clearTimeout(S.idleTimer);
+  const mins=Math.round((Date.now()-S.t0)/60000);
+  DB.add(S.count,S.malas);
+  summary(mins);
+}
+
+function summary(m){
+  document.getElementById('sum-n').textContent=S.count.toLocaleString();
+  document.getElementById('sum-ml').textContent='माला: '+S.malas;
+  document.getElementById('sum-t').textContent=m+' मिनट';
+  ['sum-m','sum-d'].forEach(id=>{
+    document.getElementById(id).classList.remove('on');
+  });
+  show('sum');
+  setTimeout(()=>document.getElementById('sum-m').classList.add('on'),3200);
+  setTimeout(()=>document.getElementById('sum-d').classList.add('on'),5800);
+}
+
+function goStart(){
+  show('ss');unite();
+  const n=document.getElementById('naam');
+  n.classList.remove('gold','flash');
+}
+
+/* ══ LIFETIME ══ */
+function showLT(){
+  const d=DB.get();
+  document.getElementById('lt-n').textContent=(d.life||0).toLocaleString();
+  document.getElementById('lt-m').textContent=(d.malas||0)+' माला';
+  document.getElementById('lt').classList.add('on');
+}
+document.getElementById('lt').addEventListener('click',()=>
+  document.getElementById('lt').classList.remove('on'));
+
+/* ══ BELL ══ */
+function bell(){
+  try{
+    if(!S.ctx)S.ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const x=S.ctx;
+    [[392,.54],[784,.27],[1176,.13],[1568,.07]].forEach(([f,a])=>{
+      const o=x.createOscillator(),g=x.createGain();
+      o.connect(g);g.connect(x.destination);
+      o.type='sine';o.frequency.value=f;
+      g.gain.setValueAtTime(0,x.currentTime);
+      g.gain.linearRampToValueAtTime(a,x.currentTime+.012);
+      g.gain.exponentialRampToValueAtTime(.0001,x.currentTime+5.8);
+      o.start();o.stop(x.currentTime+5.8);
+    });
+  }catch(e){}
+}
+
+/* ══ VOICE ══ */
+function voice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return;
+  const r=new SR();
+  r.lang='hi-IN';r.continuous=true;r.interimResults=true;
+  S.recog=r;
+  const vd=document.getElementById('vd');
+  vd.classList.add('on');
+  r.onresult=ev=>{
+    const t=ev.results[ev.results.length-1][0].transcript;
+    if(/राधे|राधा|radhe|radha/i.test(t)){
+      vd.classList.remove('hit');void vd.offsetWidth;
+      vd.classList.add('hit');
+      setTimeout(()=>vd.classList.remove('hit'),280);
+      add();
     }
-  }
-  svg.innerHTML = html;
-}
-
-/* --- SMART VOICE RECOGNITION --- */
-var recognition = null;
-var voiceActive = false;
-var syllableBuffer = null;
-var bufferTimer = null;
-
-function toggleVoice() {
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR) { toast('❌', 'Voice not supported on this browser (Try Chrome).'); return; }
-  
-  if(voiceActive) stopVoice();
-  else startVoice(SR);
-}
-
-function startVoice(SR) {
-  recognition = new SR();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = 'hi-IN'; // Works best for Hindi/Sanskrit
-  
-  recognition.onstart = function() {
-    voiceActive = true;
-    document.getElementById('vMic').classList.add('active');
-    document.getElementById('vStatBox').style.display = 'block';
-    toast('🎙️', 'Voice recognition active (Whisper mode)');
   };
-  
-  recognition.onresult = function(event) {
-    if(!voiceActive) return;
-    var interimTrans = '';
-    
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      var word = event.results[i][0].transcript.trim().toLowerCase();
-      interimTrans = word; // Show what it hears
-      document.getElementById('vTranscript').textContent = '"' + word + '"';
-      
-      // Full match check (Radha, Radhe)
-      if(word.match(/(radha|radhe|राधा|राधे|radey)/i)) {
-        incrementCount(true);
-        pulseVoiceUI('✅ Radha detected!');
-        syllableBuffer = null; // Clear buffer
-        continue;
-      }
-      
-      // Syllable Logic (Ra ... dha)
-      if(word.match(/^(ra|raa|रा|र)$/i)) {
-        syllableBuffer = 'ra';
-        pulseVoiceUI('Ra...');
-        clearTimeout(bufferTimer);
-        bufferTimer = setTimeout(()=> { syllableBuffer = null; }, 2500); // Wait 2.5s for 'dha'
-      }
-      else if(syllableBuffer === 'ra' && word.match(/^(dha|dhaa|da|धा|धे|दे|the)$/i)) {
-        incrementCount(true);
-        pulseVoiceUI('✅ (Ra+Dha) detected!');
-        syllableBuffer = null;
-        clearTimeout(bufferTimer);
-      }
-    }
+  r.onend=()=>{
+    if(S.active)try{r.start();}catch(e){}
+    else vd.classList.remove('on','hit');
   };
-  
-  recognition.onerror = function(e) {
-    if(e.error==='not-allowed') { toast('🎙', 'Mic Blocked'); stopVoice(); }
-    else if(voiceActive) setTimeout(()=> { try{recognition.start()}catch(x){} }, 500);
-  };
-  
-  recognition.onend = function() {
-    if(voiceActive) setTimeout(()=> { try{recognition.start()}catch(x){} }, 200);
-  };
-  
-  try{ recognition.start(); } catch(e){}
+  try{r.start();}catch(e){}
 }
 
-function stopVoice() {
-  voiceActive = false;
-  document.getElementById('vMic').classList.remove('active');
-  document.getElementById('vStatBox').style.display = 'none';
-  if(recognition) recognition.stop();
-  toast('🛑', 'Voice disabled.');
+/* ══ WAKE LOCK ══ */
+async function wl(){
+  try{if('wakeLock'in navigator)S.wl=await navigator.wakeLock.request('screen');}
+  catch(e){}
 }
 
-function pulseVoiceUI(msg) {
-  var vp = document.getElementById('vPulse');
-  vp.textContent = msg;
-  vp.style.color = '#00e676';
-  setTimeout(()=> { vp.textContent = 'Listening for "Radha" or "राधे"'; vp.style.color = '#FF4D8D'; }, 1000);
-}
-
-/* --- UPDESH / PROGRESS / GOALS LOGIC --- */
-function initUpdesh() {
-  var c = document.getElementById('updesh-container');
-  var html = '';
-  UPDESH_DATA.forEach(d => {
-    html += '<div class="up-card">';
-    html += '<div class="up-cat">'+d.cat+'</div>';
-    html += '<div class="up-hindi">'+d.hi+'</div>';
-    html += '<div class="up-eng">"'+d.en+'"</div>';
-    html += '<div class="up-src">~ Rasik Vani</div>';
-    html += '</div>';
-  });
-  c.innerHTML = html;
-}
-
-function updateProgressUI() {
-  document.getElementById('ui-tot-c1').textContent = state.total;
-  document.getElementById('ui-tot-c2').textContent = state.c2_total;
-  document.getElementById('ui-tot-malas').textContent = Math.floor(state.total/108) + Math.floor(state.c2_total/108);
-  
-  // Heatmap
-  var grid = document.getElementById('hmGrid');
-  grid.innerHTML = '';
-  var today = new Date();
-  var maxVal = 100; // baseline
-  
-  // Calculate max val for scaling
-  var daysData = [];
-  for(var i=6; i>=0; i--) {
-    var d = new Date(today); d.setDate(d.getDate() - i);
-    var dStr = d.toDateString();
-    var val = (dStr === state.lastDate) ? state.today : (state.dailyLog[dStr] || 0);
-    daysData.push({l: ['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()], v: val});
-    if(val > maxVal) maxVal = val;
-  }
-  
-  daysData.forEach(day => {
-    var h = Math.max(5, (day.v / maxVal)*100);
-    var bg = day.v > 0 ? (day.v >= state.dailyGoal ? 'linear-gradient(0deg, #00e676, #69f0ae)' : 'linear-gradient(0deg, var(--rose), var(--saffron))') : 'rgba(255,255,255,0.1)';
-    
-    var bar = '<div class="hm-bar-wrap">';
-    if(day.v > 0) bar += '<div style="font-size:0.5rem; color:#fff; position:absolute; top:-12px;">'+day.v+'</div>';
-    bar += '<div class="hm-bar" style="height:'+h+'%; background:'+bg+'"></div>';
-    bar += '<div class="hm-day">'+day.l+'</div></div>';
-    grid.innerHTML += bar;
-  });
-
-  // Goals Info
-  document.getElementById('ui-streak').textContent = state.streak + ' 🔥';
-  document.getElementById('ui-goal-disp').textContent = state.dailyGoal > 0 ? state.dailyGoal : 'Not Set';
-  
-  document.querySelectorAll('.g-opt').forEach(el => {
-    el.classList.remove('active');
-    if(parseInt(el.textContent) === state.dailyGoal) el.classList.add('active');
-  });
-}
-
-function updateSessionTimer() {
-  if(!window.sessionStart) return;
-  var secList = Math.floor((Date.now() - window.sessionStart)/1000);
-  var m = Math.floor(secList / 60);
-  var s = secList % 60;
-  if(s < 10) s = '0'+s;
-  document.getElementById('ui-session').textContent = m + ':' + s;
-}
-
-function setGoal(val) {
-  var v = parseInt(val);
-  if(v > 0) {
-    state.dailyGoal = v;
-    saveState();
-    updateProgressUI();
-    toast('🎯', 'Daily Goal set to ' + v);
+/* ══ PARTICLES ══ */
+function pts(){
+  const c=document.getElementById('pts');c.innerHTML='';
+  for(let i=0;i<9;i++){
+    const p=document.createElement('div');p.className='pt';
+    const s=1+Math.random()*2.5;
+    Object.assign(p.style,{
+      width:s+'px',height:s+'px',
+      left:Math.random()*100+'vw',
+      animationDuration:(13+Math.random()*17)+'s',
+      animationDelay:(-Math.random()*17)+'s'
+    });
+    c.appendChild(p);
   }
 }
-
-// Start
-init();
-
+pts();
 </script>
 </body>
 </html>
